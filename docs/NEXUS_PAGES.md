@@ -2,16 +2,9 @@
 
 [中文版本](./NEXUS_PAGES.zh-CN.md)
 
-These drafts are written to be copied into Nexus Mods pages. Keep the final Nexus page truthful and update version numbers before uploading.
+These drafts are copy-ready for Nexus Mods. Each short description and full description is bilingual, with the complete English version first and the complete Chinese version after it.
 
-## Shared Requirements
-
-- Requires Balatro on PC.
-- Requires Lovely Injector.
-- Requires Steamodded / SMODS.
-- The upload does not include Balatro, Lovely, Steamodded, game files, game art, or copyrighted assets.
-
-Useful links:
+Shared links:
 
 - Lovely: https://github.com/ethangreen-dev/lovely-injector
 - Steamodded / SMODS: https://github.com/Steamodded/smods
@@ -20,100 +13,284 @@ Useful links:
 
 ## Balatro Step Back
 
+Suggested category: Gameplay or User Interface
+
+Suggested tags: Quality of Life, Gameplay, User Interface
+
+Upload file: `BalatroStepBack-1.0.0.zip`
+
 ### Short Description
 
-Adds current-blind checkpoints and lets you step back to the latest or an earlier play/discard checkpoint.
+```text
+Adds localized in-blind checkpoints so you can step back to the latest or an earlier play/discard checkpoint.
 
-### About This Mod
+在当前盲注内添加本地化检查点，可以回到最近一次或更早的出牌/弃牌前。
+```
 
-Balatro Step Back adds two in-run buttons:
+### Full Description
 
-- `回退`: restore the latest checkpoint.
-- `记录`: open a list of available play/discard checkpoints from the current blind.
+```text
+Description
 
-The mod creates a checkpoint before each played or discarded hand. You can return to the latest checkpoint or choose an earlier checkpoint from the current blind. Returning to an earlier checkpoint discards later checkpoint history.
+Balatro Step Back adds checkpoint-based step-back support inside the current blind. It is designed for players who want to reconsider a play or discard during the same blind without restarting the whole run.
 
-### Installation
+Main features
 
-1. Install Lovely.
+- Adds a Back button in English or a 回退 button in Chinese.
+- Adds a History button in English or a 记录 button in Chinese.
+- Creates a checkpoint before each played or discarded hand.
+- Lets you return to the latest checkpoint.
+- Lets you open the checkpoint list and return to an earlier checkpoint in the current blind.
+- Returning to an earlier checkpoint discards later checkpoint history.
+- History is limited to the current blind.
+
+Installation
+
+1. Install Lovely Injector.
 2. Install Steamodded / SMODS.
-3. Download `BalatroStepBack-0.2.0.zip`.
+3. Download BalatroStepBack-1.0.0.zip.
 4. Extract the zip.
 5. Move the `BalatroStepBack` folder into:
 
-```text
 %AppData%\Balatro\Mods
-```
 
 Final layout:
 
-```text
 %AppData%\Balatro\Mods\BalatroStepBack\manifest.json
 %AppData%\Balatro\Mods\BalatroStepBack\main.lua
-```
 
-Start Balatro and enable/check `Balatro Step Back` in the Steamodded mod list.
+Requirements
 
-### Compatibility And Known Limits
+- Balatro on PC
+- Lovely Injector
+- Steamodded / SMODS
 
-- This mod does not edit game files.
-- History is limited to the current blind.
+Language support
+
+- English game language: Back, History, and English history-menu text.
+- Chinese game language: 回退, 记录, and Chinese history-menu text.
+- Other languages fall back to English UI text.
+
+Compatibility and known limits
+
+- This mod does not edit Balatro game files.
 - Restoring a checkpoint briefly reloads the run state.
 - The mod uses Balatro's run save/load table shape. Mods that store state outside normal save data may not rewind perfectly.
+- Conflicts are possible with mods that replace the same play/discard functions or the same in-run button UI.
 - If you hit a crash, test again with only Lovely, Steamodded, and this mod enabled, then include your Lovely crash log when reporting.
 
-### Permissions And Credits
+Source
+
+GitHub:
+https://github.com/kekeasure/balatro-custom-mods
+
+Credits
 
 Code by ZhiSunian. No Balatro, Lovely, Steamodded, image, audio, or other third-party assets are included.
+
+---
+
+中文说明
+
+Balatro Step Back 会在当前盲注内添加基于检查点的后退功能。它适合希望在同一盲注内反悔某次出牌或弃牌、但不想重新开始整局游戏的玩家。
+
+主要功能
+
+- 英文游戏语言下添加 Back 按钮；中文游戏语言下添加“回退”按钮。
+- 英文游戏语言下添加 History 按钮；中文游戏语言下添加“记录”按钮。
+- 每次出牌或弃牌前都会创建检查点。
+- 可以回到最近的检查点。
+- 可以打开检查点列表，回到当前盲注内更早的一步。
+- 回到更早检查点后，之后的检查点历史会被丢弃。
+- 历史记录仅限当前盲注。
+
+安装方法
+
+1. 安装 Lovely Injector。
+2. 安装 Steamodded / SMODS。
+3. 下载 BalatroStepBack-1.0.0.zip。
+4. 解压压缩包。
+5. 将 BalatroStepBack 文件夹放入：
+
+%AppData%\Balatro\Mods
+
+最终结构：
+
+%AppData%\Balatro\Mods\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack\main.lua
+
+依赖
+
+- PC 版 Balatro
+- Lovely Injector
+- Steamodded / SMODS
+
+语言支持
+
+- 英文游戏语言：显示 Back、History 和英文历史菜单文本。
+- 中文游戏语言：显示“回退”、“记录”和中文历史菜单文本。
+- 其他语言默认使用英文 UI 文本。
+
+兼容性与已知限制
+
+- 本模组不会修改 Balatro 游戏文件。
+- 恢复检查点时会短暂重新载入对局状态。
+- 本模组使用 Balatro 的对局保存/读取数据结构。保存额外外部状态的其他模组可能无法被完全回退。
+- 如果其他模组替换同一批出牌/弃牌函数或同一块对局按钮 UI，可能出现冲突。
+- 如果发生崩溃，请先只启用 Lovely、Steamodded 和本模组复测，并在反馈时附上 Lovely 崩溃日志。
+
+源码
+
+GitHub:
+https://github.com/kekeasure/balatro-custom-mods
+
+鸣谢
+
+代码作者：ZhiSunian。本模组不包含 Balatro、Lovely、Steamodded、图片、音频或其他第三方资产。
+```
 
 ## Balatro Score Preview
 
+Suggested category: User Interface or Gameplay
+
+Suggested tags: Quality of Life, Gameplay, User Interface
+
+Upload file: `BalatroScorePreview-1.0.0.zip`
+
 ### Short Description
 
-Shows a pre-play reference score for the selected hand. Standard probability effects are treated as not triggering.
-
-### About This Mod
-
-Balatro Score Preview adds a compact HUD line:
-
 ```text
-参考值：XXXXXX
+Shows a localized pre-play reference score for the selected hand. Probability effects are treated as not triggering in preview.
+
+出牌前显示本地化的所选手牌参考分数，概率效果在预览中按“不触发”处理。
 ```
 
-When cards are selected, the mod performs a sandboxed scoring simulation and restores the game state afterward. The preview is intended as a reference value for deterministic scoring. To avoid spoiling probability outcomes and affecting game balance, standard SMODS probability checks are fixed to "not triggered" during the preview. Real play still uses normal random probability.
+### Full Description
 
-Examples of probability effects treated as not triggering in the preview include Lucky Card, Bloodstone, Space Joker, and similar SMODS probability-based effects.
+```text
+Description
 
-### Installation
+Balatro Score Preview shows a pre-play reference score for the selected hand. It is intended to show a deterministic reference value before the real scoring animation runs.
 
-1. Install Lovely.
+Main features
+
+- Shows Reference: XXXXX in English or 参考值：XXXXX in Chinese.
+- Updates when cards are selected.
+- Uses a sandboxed scoring simulation, then restores the run state.
+- Covers normal hands, scoring cards, held-card effects, Jokers, enhancements, seals, and deck final scoring steps.
+- Standard SMODS probability checks are treated as not triggering during preview.
+- Real play still uses normal random probability.
+
+Important note
+
+The preview intentionally does not predict whether probability effects will trigger. Examples include Lucky Card, Bloodstone, Space Joker, and similar SMODS probability-based effects. This keeps the preview useful without revealing random outcomes before the hand is played.
+
+Installation
+
+1. Install Lovely Injector.
 2. Install Steamodded / SMODS.
-3. Download `BalatroScorePreview-0.3.0.zip`.
+3. Download BalatroScorePreview-1.0.0.zip.
 4. Extract the zip.
 5. Move the `BalatroScorePreview` folder into:
 
-```text
 %AppData%\Balatro\Mods
-```
 
 Final layout:
 
-```text
 %AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
 %AppData%\Balatro\Mods\BalatroScorePreview\main.lua
-```
 
-Start Balatro and enable/check `Balatro Score Preview` in the Steamodded mod list.
+Requirements
 
-### Compatibility And Known Limits
+- Balatro on PC
+- Lovely Injector
+- Steamodded / SMODS
 
-- This mod does not edit game files.
+Language support
+
+- English game language: Reference: XXXXX.
+- Chinese game language: 参考值：XXXXX.
+- Other languages fall back to English UI text.
+
+Compatibility and known limits
+
+- This mod does not edit Balatro game files.
 - The preview is a sandboxed simulation, not a replacement for the real scoring animation.
 - It should match vanilla and most SMODS-style deterministic scoring.
-- It intentionally does not predict whether probability effects will trigger.
-- Mods that write files, change external global state, bypass SMODS probability helpers, or bypass SMODS scoring parameters during scoring may show a different final score.
+- Mods that write files, change external global state, bypass SMODS probability helpers, or bypass SMODS scoring parameters may show a different final score.
+- If the full simulation is interrupted by unusual mod logic, the preview may fall back to a basic estimate.
 - If you hit a crash, test again with only Lovely, Steamodded, and this mod enabled, then include your Lovely crash log when reporting.
 
-### Permissions And Credits
+Source
+
+GitHub:
+https://github.com/kekeasure/balatro-custom-mods
+
+Credits
 
 Code by ZhiSunian. No Balatro, Lovely, Steamodded, image, audio, or other third-party assets are included.
+
+---
+
+中文说明
+
+Balatro Score Preview 会在出牌前显示所选手牌的参考分数。它的目标是在真实结算动画开始前，给出一个确定性参考值。
+
+主要功能
+
+- 英文游戏语言下显示 Reference: XXXXX；中文游戏语言下显示“参考值：XXXXX”。
+- 选中手牌时自动更新。
+- 使用沙盒计分试算，然后恢复对局状态。
+- 覆盖常规牌型、计分牌、手牌区效果、小丑牌、增强牌、蜡封、牌背最终结算步骤等路径。
+- 标准 SMODS 概率判定在预览中按“不触发”处理。
+- 真实出牌时仍使用正常随机概率。
+
+重要说明
+
+本模组故意不会预测概率效果是否触发。例如 Lucky Card、Bloodstone、Space Joker，以及类似的 SMODS 概率效果。这样可以让预览值保持有用，同时不会在出牌前泄露随机结果。
+
+安装方法
+
+1. 安装 Lovely Injector。
+2. 安装 Steamodded / SMODS。
+3. 下载 BalatroScorePreview-1.0.0.zip。
+4. 解压压缩包。
+5. 将 BalatroScorePreview 文件夹放入：
+
+%AppData%\Balatro\Mods
+
+最终结构：
+
+%AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
+%AppData%\Balatro\Mods\BalatroScorePreview\main.lua
+
+依赖
+
+- PC 版 Balatro
+- Lovely Injector
+- Steamodded / SMODS
+
+语言支持
+
+- 英文游戏语言：显示 Reference: XXXXX。
+- 中文游戏语言：显示“参考值：XXXXX”。
+- 其他语言默认使用英文 UI 文本。
+
+兼容性与已知限制
+
+- 本模组不会修改 Balatro 游戏文件。
+- 预览是沙盒试算，不会替代真实结算动画。
+- 它应能匹配原版和大多数 SMODS 风格的确定性计分。
+- 如果其他模组会写文件、改变外部全局状态、绕过 SMODS 概率函数，或绕过 SMODS 计分参数，预览值可能与最终分数不同。
+- 如果完整试算被某些特殊模组逻辑打断，预览可能退回基础估算。
+- 如果发生崩溃，请先只启用 Lovely、Steamodded 和本模组复测，并在反馈时附上 Lovely 崩溃日志。
+
+源码
+
+GitHub:
+https://github.com/kekeasure/balatro-custom-mods
+
+鸣谢
+
+代码作者：ZhiSunian。本模组不包含 Balatro、Lovely、Steamodded、图片、音频或其他第三方资产。
+```

@@ -4,14 +4,14 @@
 
 Author: ZhiSunian
 
-Version: 0.2.0
+Version: 1.0.0
 
 ## What It Does
 
 Balatro Step Back adds checkpoints inside the current blind.
 
-- `回退`: return to the latest play/discard checkpoint.
-- `记录`: open a list and choose an earlier checkpoint in the current blind.
+- English UI: `Back` returns to the latest play/discard checkpoint, and `History` opens the checkpoint list.
+- Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
 - History is limited to the current blind. Choosing an earlier checkpoint discards later checkpoint history.
 
 ## Requirements
@@ -61,6 +61,13 @@ Known limits:
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.0.0
+
+- Bumped the public version to 1.0.0.
+- Added language-aware UI labels.
+- English game language now shows `Back`, `History`, and English history-menu text.
+- Chinese game language keeps `回退`, `记录`, and Chinese history-menu text.
 
 ### 0.2.0
 

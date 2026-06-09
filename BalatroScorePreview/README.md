@@ -4,13 +4,13 @@
 
 Author: ZhiSunian
 
-Version: 0.3.0
+Version: 1.0.0
 
 Shows a sandboxed reference score before playing the selected hand.
 
 ## What It Does
 
-- Shows `参考值：XXXXXX` when cards are selected.
+- Shows `Reference: XXXXX` in English and `参考值：XXXXX` in Chinese when cards are selected.
 - Prefers a full sandbox simulation: temporarily runs the real scoring path, then restores the run state.
 - Covers normal poker hands, scoring cards, held-card effects, Jokers, enhancements, seals, deck final scoring steps, and other real scoring paths.
 - Standard SMODS probability checks are forced to "not triggered" during preview, so it does not reveal whether effects such as Lucky Card, Bloodstone, or Space Joker will trigger.
@@ -53,3 +53,12 @@ The full simulation keeps the run unchanged by snapshotting and restoring state.
 ## Publishing Notes
 
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
+
+## Changelog
+
+### 1.0.0
+
+- Bumped the public version to 1.0.0.
+- Added language-aware UI text.
+- English game language now shows `Reference: XXXXX`.
+- Chinese game language keeps `参考值：XXXXX`.

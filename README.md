@@ -12,8 +12,8 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 
 | Mod | Version | Purpose |
 | --- | --- | --- |
-| [Balatro Step Back](./BalatroStepBack) | 0.2.0 | Adds in-blind checkpoints and lets you step back to the latest or an earlier play/discard checkpoint. |
-| [Balatro Score Preview](./BalatroScorePreview) | 0.3.0 | Shows a pre-play reference score for the selected hand. Standard SMODS probability checks are treated as not triggering in the preview. |
+| [Balatro Step Back](./BalatroStepBack) | 1.0.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard checkpoint. |
+| [Balatro Score Preview](./BalatroScorePreview) | 1.0.0 | Shows a localized pre-play reference score for the selected hand. Standard SMODS probability checks are treated as not triggering in the preview. |
 
 ## Requirements
 
@@ -43,13 +43,14 @@ The final layout should look like this:
 Do not place the mod inside an extra nested folder such as:
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-0.2.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack-1.0.0\BalatroStepBack\manifest.json
 ```
 
 ## Compatibility And Safety
 
 - These mods do not edit Balatro's installed game files.
 - These mods do not include executable binaries, DLLs, game assets, textures, sounds, or copyrighted Balatro content.
+- Both mods show English UI when the game language is English, and Simplified/Traditional Chinese UI when the language key starts with `zh`.
 - Both mods hook runtime Lua functions, so conflicts are still possible with mods that replace the same UI or scoring functions.
 - Balatro Step Back restores checkpoints by using Balatro's run save/load shape. Mods that keep unsaved external state may not rewind perfectly.
 - Balatro Score Preview uses a sandboxed scoring simulation. It should work with vanilla and most SMODS-style scoring mods, but mods with external side effects, custom random logic outside SMODS probability helpers, or nonstandard scoring globals can still differ.

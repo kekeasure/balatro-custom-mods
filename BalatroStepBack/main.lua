@@ -6,6 +6,43 @@ StepBack.max_history = StepBack.max_history or 20
 StepBack.ui = StepBack.ui or { count_text = "0" }
 StepBack.restoring = false
 
+local function is_chinese_language()
+    local lang = G and G.SETTINGS and (G.SETTINGS.real_language or G.SETTINGS.language) or nil
+    return type(lang) == "string" and lang:sub(1, 2) == "zh"
+end
+
+local stepback_text = {
+    en = {
+        undo = "Back",
+        history = "History",
+        history_sub = "List",
+        choose = "Choose a checkpoint",
+        no_history = "No checkpoints in this blind",
+        play = "Play",
+        discard = "Discard",
+        before_prefix = "Before ",
+        before_suffix = "",
+        back = "Back"
+    },
+    zh = {
+        undo = "回退",
+        history = "记录",
+        history_sub = "列表",
+        choose = "选择回到哪一步之前",
+        no_history = "当前盲注还没有可回退记录",
+        play = "出牌",
+        discard = "弃牌",
+        before_prefix = "",
+        before_suffix = " 前",
+        back = "返回"
+    }
+}
+
+local function loc(key)
+    local lang = is_chinese_language() and stepback_text.zh or stepback_text.en
+    return lang[key] or stepback_text.en[key] or key
+end
+
 local function is_pack_state()
     return G.STATE == G.STATES.TAROT_PACK
         or G.STATE == G.STATES.PLANET_PACK
@@ -96,9 +133,29 @@ end
 local function action_label(kind)
     local round = G.GAME.current_round or {}
     if kind == "play" then
-        return "出牌 " .. tostring((round.hands_played or 0) + 1)
+        return loc("play") .. " " .. tostring((round.hands_played or 0) + 1)
     end
-    return "弃牌 " .. tostring((round.discards_used or 0) + 1)
+    return loc("discard") .. " " .. tostring((round.discards_used or 0) + 1)
+end
+
+local function action_number(kind)
+    local round = G.GAME.current_round or {}
+    if kind == "play" then
+        return (round.hands_played or 0) + 1
+    end
+    return (round.discards_used or 0) + 1
+end
+
+local function entry_action_label(entry)
+    if entry and entry.kind then
+        local key = entry.kind == "play" and "play" or "discard"
+        return loc(key) .. " " .. tostring(entry.action_number or "?")
+    end
+    return entry and entry.label or "?"
+end
+
+local function entry_restore_label(entry)
+    return loc("before_prefix") .. entry_action_label(entry) .. loc("before_suffix")
 end
 
 local function capture(kind, hook)
@@ -111,6 +168,7 @@ local function capture(kind, hook)
     StepBack.history[#StepBack.history + 1] = {
         label = action_label(kind),
         kind = kind,
+        action_number = action_number(kind),
         save = save_table
     }
 
@@ -192,13 +250,13 @@ function create_UIBox_stepback_history()
 
     local rows = {
         { n = G.UIT.R, config = { align = "cm", padding = 0.05 }, nodes = {
-            { n = G.UIT.T, config = { text = "选择回到哪一步之前", scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true } }
+            { n = G.UIT.T, config = { text = loc("choose"), scale = 0.5, colour = G.C.UI.TEXT_LIGHT, shadow = true } }
         }}
     }
 
     if #StepBack.history == 0 then
         rows[#rows + 1] = { n = G.UIT.R, config = { align = "cm", padding = 0.08 }, nodes = {
-            { n = G.UIT.T, config = { text = "当前盲注还没有可回退记录", scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
+            { n = G.UIT.T, config = { text = loc("no_history"), scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
         }}
     else
         for i, entry in ipairs(StepBack.history) do
@@ -209,7 +267,7 @@ function create_UIBox_stepback_history()
             end
             rows[#rows + 1] = UIBox_button({
                 id = func_name,
-                label = { entry.label .. " 前" },
+                label = { entry_restore_label(entry) },
                 button = func_name,
                 minw = 5.2,
                 minh = 0.8,
@@ -220,7 +278,7 @@ function create_UIBox_stepback_history()
     end
 
     return create_UIBox_generic_options({
-        back_label = "返回",
+        back_label = loc("back"),
         minw = 6,
         contents = rows
     })
@@ -254,13 +312,14 @@ end
 local original_create_UIBox_buttons = create_UIBox_buttons
 function create_UIBox_buttons()
     local t = original_create_UIBox_buttons()
-    local text_scale = 0.36
+    local text_scale = is_chinese_language() and 0.36 or 0.29
+    local button_width = is_chinese_language() and 1.35 or 1.55
     local undo_button = {
         n = G.UIT.C,
         config = {
             id = "stepback_undo_button",
             align = "tm",
-            minw = 1.35,
+            minw = button_width,
             minh = 1.3,
             padding = 0.18,
             r = 0.1,
@@ -272,7 +331,7 @@ function create_UIBox_buttons()
         },
         nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
-                { n = G.UIT.T, config = { text = "回退", scale = text_scale, colour = G.C.UI.TEXT_LIGHT } }
+                { n = G.UIT.T, config = { text = loc("undo"), scale = text_scale, colour = G.C.UI.TEXT_LIGHT } }
             }},
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
                 { n = G.UIT.T, config = { ref_table = StepBack.ui, ref_value = "count_text", scale = text_scale * 0.7, colour = G.C.UI.TEXT_LIGHT } }
@@ -285,7 +344,7 @@ function create_UIBox_buttons()
         config = {
             id = "stepback_history_button",
             align = "tm",
-            minw = 1.35,
+            minw = button_width,
             minh = 1.3,
             padding = 0.18,
             r = 0.1,
@@ -297,10 +356,10 @@ function create_UIBox_buttons()
         },
         nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
-                { n = G.UIT.T, config = { text = "记录", scale = text_scale, colour = G.C.UI.TEXT_LIGHT } }
+                { n = G.UIT.T, config = { text = loc("history"), scale = text_scale, colour = G.C.UI.TEXT_LIGHT } }
             }},
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
-                { n = G.UIT.T, config = { text = "列表", scale = text_scale * 0.7, colour = G.C.UI.TEXT_LIGHT } }
+                { n = G.UIT.T, config = { text = loc("history_sub"), scale = text_scale * 0.7, colour = G.C.UI.TEXT_LIGHT } }
             }}
         }
     }

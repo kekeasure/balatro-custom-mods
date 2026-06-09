@@ -1,10 +1,23 @@
 local ScorePreview = rawget(_G, "BalatroScorePreview") or {}
 _G.BalatroScorePreview = ScorePreview
 
+local function is_chinese_language()
+    local lang = G and G.SETTINGS and (G.SETTINGS.real_language or G.SETTINGS.language) or nil
+    return type(lang) == "string" and lang:sub(1, 2) == "zh"
+end
+
+local function preview_prefix()
+    return is_chinese_language() and "参考值：" or "Reference: "
+end
+
+local function preview_idle_text()
+    return preview_prefix() .. "-"
+end
+
 ScorePreview.ui = ScorePreview.ui or {
-    line = "参考值：-"
+    line = preview_idle_text()
 }
-ScorePreview.ui.line = ScorePreview.ui.line or "参考值：-"
+ScorePreview.ui.line = ScorePreview.ui.line or preview_idle_text()
 ScorePreview.cache = ScorePreview.cache or { signature = nil, result = nil }
 
 local function fmt_number(value)
@@ -785,11 +798,11 @@ local function calculate_preview()
 end
 
 local function set_idle()
-    ScorePreview.ui.line = "参考值：-"
+    ScorePreview.ui.line = preview_idle_text()
 end
 
 local function set_unavailable(reason)
-    ScorePreview.ui.line = "参考值：-"
+    ScorePreview.ui.line = preview_idle_text()
 end
 
 local function apply_result(result)
@@ -798,7 +811,7 @@ local function apply_result(result)
         return
     end
 
-    ScorePreview.ui.line = "参考值：" .. fmt_number(result.total)
+    ScorePreview.ui.line = preview_prefix() .. fmt_number(result.total)
 end
 
 function ScorePreview.update()

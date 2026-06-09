@@ -22,11 +22,14 @@ Use this before publishing to GitHub Releases or Nexus Mods.
 - Launch Balatro with Lovely and Steamodded.
 - Confirm both mods appear in the Steamodded mod list.
 - Test Balatro Step Back:
+  - In English, confirm the buttons show `Back` and `History`.
+  - In Chinese, confirm the buttons show `回退` and `记录`.
   - Play or discard once.
-  - Click `回退`.
-  - Open `记录` and restore an earlier checkpoint.
+  - Restore the latest checkpoint.
+  - Open the checkpoint list and restore an earlier checkpoint.
 - Test Balatro Score Preview:
-  - Select cards and check `参考值：...` appears.
+  - In English, select cards and check `Reference: ...` appears.
+  - In Chinese, select cards and check `参考值：...` appears.
   - Test at least one normal Joker scoring case.
   - Test one probability case, such as Lucky Card, and confirm the preview uses the non-trigger reference value.
 
