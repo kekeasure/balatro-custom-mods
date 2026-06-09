@@ -1,5 +1,7 @@
 # Nexus Mods Page Drafts
 
+[中文版本](./NEXUS_PAGES.zh-CN.md)
+
 These drafts are written to be copied into Nexus Mods pages. Keep the final Nexus page truthful and update version numbers before uploading.
 
 ## Shared Requirements

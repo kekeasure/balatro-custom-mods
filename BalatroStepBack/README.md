@@ -1,5 +1,7 @@
 # Balatro Step Back
 
+[中文说明](./README.zh-CN.md)
+
 Author: ZhiSunian
 
 Version: 0.2.0

@@ -1,5 +1,7 @@
 # Release Checklist
 
+[中文版本](./RELEASE_CHECKLIST.zh-CN.md)
+
 Use this before publishing to GitHub Releases or Nexus Mods.
 
 ## Files
@@ -36,4 +38,3 @@ Use this before publishing to GitHub Releases or Nexus Mods.
 - Include the GitHub repository link.
 - Do not claim perfect compatibility with all mods.
 - Do not include copyrighted game files or third-party assets.
-

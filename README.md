@@ -1,10 +1,12 @@
 # Balatro Custom Mods
 
+[中文说明](./README.zh-CN.md)
+
 Author: ZhiSunian
 
 This repository contains small Balatro mods built for the Lovely + Steamodded/SMODS mod stack.
 
-本仓库收录 ZhiSunian 自制的 Balatro / 小丑牌模组。所有模组都基于 Lovely 和 Steamodded/SMODS，不包含 Balatro、Lovely、Steamodded 的文件或游戏素材。
+No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or other third-party assets are included.
 
 ## Mods
 
@@ -63,6 +65,7 @@ BalatroStepBack/
   manifest.json
   main.lua
   README.md
+  README.zh-CN.md
 ```
 
 ```text
@@ -70,13 +73,13 @@ BalatroScorePreview/
   manifest.json
   main.lua
   README.md
+  README.zh-CN.md
 ```
 
-See [docs/NEXUS_PAGES.md](./docs/NEXUS_PAGES.md) for Nexus description drafts.
+See [docs/NEXUS_PAGES.md](./docs/NEXUS_PAGES.md) for English Nexus description drafts, and [docs/NEXUS_PAGES.zh-CN.md](./docs/NEXUS_PAGES.zh-CN.md) for Chinese drafts.
 
 ## License
 
 GPL-3.0. See [LICENSE](./LICENSE).
 
 Balatro is owned by LocalThunk / Playstack. Lovely and Steamodded/SMODS belong to their respective authors. This repository is not affiliated with or endorsed by them.
-
