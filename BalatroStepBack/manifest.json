@@ -1,0 +1,13 @@
+{
+  "id": "BalatroStepBack",
+  "name": "Balatro Step Back",
+  "display_name": "Step Back",
+  "author": ["ZhiSunian"],
+  "description": "Adds in-blind checkpoints before each played or discarded hand, then lets you step back to the latest or any earlier checkpoint in the current blind.",
+  "prefix": "stepback",
+  "version": "0.2.0",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "2E7D32",
+  "badge_text_colour": "FFFFFF"
+}

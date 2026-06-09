@@ -1,0 +1,6 @@
+dist/
+*.zip
+MOD_PLAN.md
+NEXUS_UPLOAD_DRAFT.md
+*.tmp
+

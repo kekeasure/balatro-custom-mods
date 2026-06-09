@@ -1,0 +1,13 @@
+{
+  "id": "BalatroScorePreview",
+  "name": "Balatro Score Preview",
+  "display_name": "Score Preview",
+  "author": ["ZhiSunian"],
+  "description": "Shows a sandboxed no-probability-trigger reference score for the selected poker hand.",
+  "prefix": "scorepreview",
+  "version": "0.3.0",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "1565C0",
+  "badge_text_colour": "FFFFFF"
+}
