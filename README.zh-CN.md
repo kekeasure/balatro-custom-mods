@@ -10,8 +10,8 @@
 
 | 模组 | 版本 | 用途 |
 | --- | --- | --- |
-| [Balatro Step Back](./BalatroStepBack) | 1.0.0 | 在当前盲注内记录出牌/弃牌前的检查点，可回到最近一次或更早的操作前，并按游戏语言显示中英文 UI。 |
-| [Balatro Score Preview](./BalatroScorePreview) | 1.0.0 | 在出牌前显示所选手牌的参考分数，并按游戏语言显示中英文 UI；常规 SMODS 概率判定在预览中按“不触发”处理。 |
+| [Balatro Rewind / 对局回退](./BalatroRewind) | 1.0.0 | 在当前盲注内记录出牌/弃牌前的检查点，可回到最近一次或更早的操作前，并按游戏语言显示中英文 UI。 |
+| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.0.0 | 在出牌前显示所选手牌的参考分数，并按游戏语言显示中英文 UI；常规 SMODS 概率判定在预览中按“不触发”处理。 |
 
 ## 依赖
 
@@ -34,14 +34,14 @@
 最终结构应类似：
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroRewind\manifest.json
 %AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
 ```
 
 不要多套一层文件夹，例如不要变成：
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-1.0.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroRewind-1.0.0\BalatroRewind\manifest.json
 ```
 
 ## 兼容性与安全说明
@@ -50,8 +50,8 @@
 - 这些模组不包含可执行二进制文件、DLL、游戏素材、贴图、音频或受版权保护的 Balatro 内容。
 - 当游戏语言为英文时，模组显示英文 UI；当语言键以 `zh` 开头时，模组显示中文 UI。
 - 两个模组都会在运行时挂接 Lua 函数，因此仍可能与改写同一 UI 或计分函数的其他模组冲突。
-- Balatro Step Back 使用 Balatro 的对局保存/读取数据结构来恢复检查点。保存额外外部状态的模组可能无法被完全回退。
-- Balatro Score Preview 使用沙盒试算。它应能兼容原版和大多数按 SMODS 标准计分流程编写的模组，但如果其他模组有外部副作用、自定义随机逻辑或非标准计分全局状态，预览值仍可能与最终值不同。
+- Balatro Rewind / 对局回退 使用 Balatro 的对局保存/读取数据结构来恢复检查点。保存额外外部状态的模组可能无法被完全回退。
+- Balatro Score Preview / 分数预览 使用沙盒试算。它应能兼容原版和大多数按 SMODS 标准计分流程编写的模组，但如果其他模组有外部副作用、自定义随机逻辑或非标准计分全局状态，预览值仍可能与最终值不同。
 
 反馈问题前，建议先只启用 Lovely、Steamodded 和出问题的单个模组进行复测。
 
@@ -60,7 +60,7 @@
 上传到 Nexus Mods 时，每个 zip 应只包含一个顶层模组文件夹：
 
 ```text
-BalatroStepBack/
+BalatroRewind/
   manifest.json
   main.lua
   README.md

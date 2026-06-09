@@ -1,14 +1,16 @@
-# Balatro Step Back
+# Balatro Rewind / 对局回退
 
 [English README](./README.md)
 
 作者：ZhiSunian
 
+中文名：对局回退
+
 版本：1.0.0
 
 ## 功能
 
-Balatro Step Back 会在当前盲注内添加出牌/弃牌检查点。
+Balatro Rewind / 对局回退 会在当前盲注内添加出牌/弃牌检查点。
 
 - 英文 UI：`Back` 回到最近一次出牌或弃牌前，`History` 打开检查点列表。
 - 中文 UI：`回退` 回到最近一次出牌或弃牌前，`记录` 打开检查点列表。
@@ -27,7 +29,7 @@ Balatro Step Back 会在当前盲注内添加出牌/弃牌检查点。
 1. 安装 Lovely。
 2. 安装 Steamodded / SMODS。
 3. 解压本压缩包。
-4. 将 `BalatroStepBack` 文件夹放入：
+4. 将 `BalatroRewind` 文件夹放入：
 
 ```text
 %AppData%\Balatro\Mods
@@ -36,13 +38,13 @@ Balatro Step Back 会在当前盲注内添加出牌/弃牌检查点。
 最终结构应为：
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack\manifest.json
-%AppData%\Balatro\Mods\BalatroStepBack\main.lua
-%AppData%\Balatro\Mods\BalatroStepBack\README.md
-%AppData%\Balatro\Mods\BalatroStepBack\README.zh-CN.md
+%AppData%\Balatro\Mods\BalatroRewind\manifest.json
+%AppData%\Balatro\Mods\BalatroRewind\main.lua
+%AppData%\Balatro\Mods\BalatroRewind\README.md
+%AppData%\Balatro\Mods\BalatroRewind\README.zh-CN.md
 ```
 
-5. 启动 Balatro，并确认 Steamodded 模组列表中出现 `Balatro Step Back`。
+5. 启动 Balatro，并确认 Steamodded 模组列表中出现 `Balatro Rewind` 或 `Rewind / 对局回退`。
 
 ## 兼容性说明
 

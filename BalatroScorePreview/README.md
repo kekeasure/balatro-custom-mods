@@ -1,8 +1,10 @@
-# Balatro Score Preview
+# Balatro Score Preview / 分数预览
 
 [中文说明](./README.zh-CN.md)
 
 Author: ZhiSunian
+
+Chinese name: 分数预览
 
 Version: 1.0.0
 
@@ -44,7 +46,7 @@ The final layout should be:
 %AppData%\Balatro\Mods\BalatroScorePreview\README.zh-CN.md
 ```
 
-5. Start Balatro and confirm `Balatro Score Preview` appears in the Steamodded mod list.
+5. Start Balatro and confirm `Balatro Score Preview` or `Score Preview / 分数预览` appears in the Steamodded mod list.
 
 ## Compatibility Notes
 

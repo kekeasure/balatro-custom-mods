@@ -1,14 +1,16 @@
-# Balatro Step Back
+# Balatro Rewind / 对局回退
 
 [中文说明](./README.zh-CN.md)
 
 Author: ZhiSunian
 
+Chinese name: 对局回退
+
 Version: 1.0.0
 
 ## What It Does
 
-Balatro Step Back adds checkpoints inside the current blind.
+Balatro Rewind / 对局回退 adds checkpoints inside the current blind.
 
 - English UI: `Back` returns to the latest play/discard checkpoint, and `History` opens the checkpoint list.
 - Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
@@ -27,7 +29,7 @@ This archive does not include Balatro, Lovely, Steamodded, or any game files.
 1. Install Lovely.
 2. Install Steamodded / SMODS.
 3. Extract this archive.
-4. Put the `BalatroStepBack` folder into:
+4. Put the `BalatroRewind` folder into:
 
 ```text
 %AppData%\Balatro\Mods
@@ -36,12 +38,12 @@ This archive does not include Balatro, Lovely, Steamodded, or any game files.
 The final layout should be:
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack\manifest.json
-%AppData%\Balatro\Mods\BalatroStepBack\main.lua
-%AppData%\Balatro\Mods\BalatroStepBack\README.md
+%AppData%\Balatro\Mods\BalatroRewind\manifest.json
+%AppData%\Balatro\Mods\BalatroRewind\main.lua
+%AppData%\Balatro\Mods\BalatroRewind\README.md
 ```
 
-5. Start Balatro and confirm `Balatro Step Back` appears in the Steamodded mod list.
+5. Start Balatro and confirm `Balatro Rewind` or `Rewind / 对局回退` appears in the Steamodded mod list.
 
 ## Compatibility Notes
 

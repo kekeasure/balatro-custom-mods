@@ -1,0 +1,13 @@
+{
+  "id": "BalatroRewind",
+  "name": "Balatro Rewind",
+  "display_name": "Rewind / 对局回退",
+  "author": ["ZhiSunian"],
+  "description": "Adds localized in-blind checkpoints before each played or discarded hand, then lets you rewind to the latest or any earlier checkpoint in the current blind. Chinese name: 对局回退.",
+  "prefix": "rewind",
+  "version": "1.0.0",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "2E7D32",
+  "badge_text_colour": "FFFFFF"
+}

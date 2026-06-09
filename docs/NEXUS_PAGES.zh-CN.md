@@ -17,10 +17,10 @@
 
 ## 文件名
 
-- Balatro Step Back: `BalatroStepBack-1.0.0.zip`
-- Balatro Score Preview: `BalatroScorePreview-1.0.0.zip`
+- Balatro Rewind / 对局回退: `BalatroRewind-1.0.0.zip`
+- Balatro Score Preview / 分数预览: `BalatroScorePreview-1.0.0.zip`
 
 ## 推荐分类和标签
 
-- Balatro Step Back: `Gameplay` 或 `User Interface`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。
-- Balatro Score Preview: `User Interface` 或 `Gameplay`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。
+- Balatro Rewind / 对局回退: `Gameplay` 或 `User Interface`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。
+- Balatro Score Preview / 分数预览: `User Interface` 或 `Gameplay`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。

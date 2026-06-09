@@ -1,8 +1,10 @@
-# Balatro Score Preview
+# Balatro Score Preview / 分数预览
 
 [English README](./README.md)
 
 作者：ZhiSunian
+
+中文名：分数预览
 
 版本：1.0.0
 
@@ -44,7 +46,7 @@
 %AppData%\Balatro\Mods\BalatroScorePreview\README.zh-CN.md
 ```
 
-4. 启动游戏，在 Steamodded 的模组列表中启用 `Balatro Score Preview`。
+4. 启动游戏，在 Steamodded 的模组列表中启用 `Balatro Score Preview` 或 `Score Preview / 分数预览`。
 
 ## 当前限制
 
