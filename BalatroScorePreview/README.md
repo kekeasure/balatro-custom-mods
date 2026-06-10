@@ -15,6 +15,7 @@ Shows a sandboxed reference score before playing the selected hand.
 - Shows `Reference: XXXXX` in English, `参考值：XXXXX` in Simplified Chinese, and `參考值：XXXXX` in Traditional Chinese when cards are selected.
 - Prefers a full sandbox simulation: temporarily runs the real scoring path, then restores the run state.
 - Covers normal poker hands, scoring cards, held-card effects, Jokers, enhancements, seals, deck final scoring steps, and other real scoring paths.
+- Handles vanilla Boss Blind scoring conditions in the sandbox. Random or disruptive pre-play effects such as The Hook are not executed on the live hand; deterministic effects such as The Tooth are simulated and then restored.
 - Standard SMODS probability checks are forced to "not triggered" during preview, so it does not reveal whether effects such as Lucky Card, Bloodstone, or Space Joker will trigger.
 - If another mod interrupts the full simulation with unusual logic, the preview falls back to a basic estimate.
 
@@ -50,7 +51,7 @@ The final layout should be:
 
 ## Compatibility Notes
 
-The full simulation keeps the run unchanged by snapshotting and restoring state. It should match vanilla scoring and most mods written against standard SMODS scoring context, but it cannot promise compatibility with arbitrary mod code. If another mod writes files during scoring, mutates external global state, depends on real animation events, bypasses SMODS probability helpers, or bypasses SMODS scoring parameters, the preview may fall back to a basic estimate or differ from the final score.
+The full simulation keeps the run unchanged by snapshotting and restoring state. It should match vanilla scoring and most mods written against standard SMODS scoring context, but it cannot promise compatibility with arbitrary mod code. For safety, arbitrary custom Boss Blind `press_play` events are not executed during preview. If another mod writes files during scoring, mutates external global state, depends on real animation events, bypasses SMODS probability helpers, or bypasses SMODS scoring parameters, the preview may fall back to a basic estimate or differ from the final score.
 
 ## Publishing Notes
 
@@ -65,3 +66,4 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 - English game language now shows `Reference: XXXXX`.
 - Simplified Chinese game language shows `参考值：XXXXX`.
 - Traditional Chinese game language shows `參考值：XXXXX`.
+- Improved Boss Blind sandboxing so The Hook no longer flips or discards real hand cards during preview.

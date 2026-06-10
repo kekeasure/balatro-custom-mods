@@ -81,6 +81,49 @@ local function shallow_copy_array(source)
     return copy
 end
 
+local SNAPSHOT_AREAS = {
+    "hand",
+    "play",
+    "deck",
+    "discard",
+    "jokers",
+    "consumeables",
+    "vouchers",
+    "pack_cards"
+}
+
+local function capture_area_states()
+    local states = {}
+    for _, name in ipairs(SNAPSHOT_AREAS) do
+        local area = G and G[name]
+        if area and area.cards then
+            states[name] = {
+                cards = shallow_copy_array(area.cards),
+                highlighted = shallow_copy_array(area.highlighted or {})
+            }
+        end
+    end
+    return states
+end
+
+local function restore_area_states(states)
+    for name, state in pairs(states or {}) do
+        local area = G and G[name]
+        if area and state then
+            if area.cards then
+                area.cards = shallow_copy_array(state.cards)
+                for _, card in ipairs(area.cards) do
+                    card.area = area
+                    card.parent = area
+                end
+            end
+            if area.highlighted then area.highlighted = shallow_copy_array(state.highlighted) end
+            if type(area.set_ranks) == "function" then pcall(function() area:set_ranks() end) end
+            if type(area.align_cards) == "function" then pcall(function() area:align_cards() end) end
+        end
+    end
+end
+
 local function has_card(cards, card)
     for _, scoring_card in ipairs(cards or {}) do
         if scoring_card == card then return true end
@@ -179,6 +222,7 @@ local function capture_state()
     local snapshot = {
         state = G.STATE,
         state_complete = G.STATE_COMPLETE,
+        area_states = capture_area_states(),
         play_cards = shallow_copy_array(G.play and G.play.cards or {}),
         hand_cards = shallow_copy_array(G.hand and G.hand.cards or {}),
         play_highlighted = shallow_copy_array(G.play and G.play.highlighted or {}),
@@ -194,6 +238,7 @@ local function capture_state()
             pseudorandom = deep_copy(G.GAME.pseudorandom),
             current_hand = deep_copy(G.GAME.current_round and G.GAME.current_round.current_hand or {}),
             hands = deep_copy(G.GAME.hands or {}),
+            hand_usage = deep_copy(G.GAME.hand_usage or {}),
             cards_played = deep_copy(G.GAME.cards_played or {}),
             round_scores = deep_copy(G.GAME.round_scores or {})
         },
@@ -201,7 +246,15 @@ local function capture_state()
             triggered = G.GAME.blind.triggered,
             disabled = G.GAME.blind.disabled,
             chips = G.GAME.blind.chips,
-            debuff = deep_copy(G.GAME.blind.debuff)
+            chip_text = G.GAME.blind.chip_text,
+            debuff = deep_copy(G.GAME.blind.debuff),
+            hands = deep_copy(G.GAME.blind.hands),
+            only_hand = G.GAME.blind.only_hand,
+            prepped = G.GAME.blind.prepped,
+            discards_sub = G.GAME.blind.discards_sub,
+            hands_sub = G.GAME.blind.hands_sub,
+            block_play = G.GAME.blind.block_play,
+            effect = G.GAME.blind.effect
         } or nil,
         smods = SMODS and {
             no_resolve = SMODS.no_resolve,
@@ -235,15 +288,21 @@ local function capture_state()
         snapshot.card_states[#snapshot.card_states + 1] = {
             card = card,
             area = card.area,
+            parent = card.parent,
             ability = deep_copy(card.ability),
             base = deep_copy(card.base),
             debuff = card.debuff,
+            debuffed_by_blind = card.debuffed_by_blind,
             destroyed = card.destroyed,
             shattered = card.shattered,
             getting_sliced = card.getting_sliced,
             lucky_trigger = card.lucky_trigger,
             repetition_trigger = card.repetition_trigger,
-            highlighted = card.highlighted
+            highlighted = card.highlighted,
+            facing = card.facing,
+            sprite_facing = card.sprite_facing,
+            flipping = card.flipping,
+            pinch = deep_copy(card.pinch)
         }
     end
 
@@ -269,17 +328,24 @@ local function restore_state(snapshot)
         local card = state.card
         if card then
             card.area = state.area
+            card.parent = state.parent
             card.ability = deep_copy(state.ability)
             card.base = deep_copy(state.base)
             card.debuff = state.debuff
+            card.debuffed_by_blind = state.debuffed_by_blind
             card.destroyed = state.destroyed
             card.shattered = state.shattered
             card.getting_sliced = state.getting_sliced
             card.lucky_trigger = state.lucky_trigger
             card.repetition_trigger = state.repetition_trigger
             card.highlighted = state.highlighted
+            card.facing = state.facing
+            card.sprite_facing = state.sprite_facing
+            card.flipping = state.flipping
+            card.pinch = deep_copy(state.pinch)
         end
     end
+    restore_area_states(snapshot.area_states)
 
     if G.GAME then
         G.GAME.chips = snapshot.game.chips
@@ -294,6 +360,7 @@ local function restore_state(snapshot)
             restore_table(G.GAME.current_round.current_hand, snapshot.game.current_hand)
         end
         if G.GAME.hands then restore_table(G.GAME.hands, snapshot.game.hands) end
+        if G.GAME.hand_usage then restore_table(G.GAME.hand_usage, snapshot.game.hand_usage) end
         if G.GAME.cards_played then restore_table(G.GAME.cards_played, snapshot.game.cards_played) end
         if G.GAME.round_scores then restore_table(G.GAME.round_scores, snapshot.game.round_scores) end
     end
@@ -302,7 +369,15 @@ local function restore_state(snapshot)
         G.GAME.blind.triggered = snapshot.blind.triggered
         G.GAME.blind.disabled = snapshot.blind.disabled
         G.GAME.blind.chips = snapshot.blind.chips
+        G.GAME.blind.chip_text = snapshot.blind.chip_text
         G.GAME.blind.debuff = deep_copy(snapshot.blind.debuff)
+        G.GAME.blind.hands = deep_copy(snapshot.blind.hands)
+        G.GAME.blind.only_hand = snapshot.blind.only_hand
+        G.GAME.blind.prepped = snapshot.blind.prepped
+        G.GAME.blind.discards_sub = snapshot.blind.discards_sub
+        G.GAME.blind.hands_sub = snapshot.blind.hands_sub
+        G.GAME.blind.block_play = snapshot.blind.block_play
+        G.GAME.blind.effect = snapshot.blind.effect
     end
 
     if SMODS and snapshot.smods then
@@ -340,9 +415,11 @@ local function with_sandbox(fn)
         juice_card = juice_card,
         ease_dollars = ease_dollars,
         ease_colour = ease_colour,
+        inc_career_stat = inc_career_stat,
         check_for_unlock = check_for_unlock,
         check_and_set_high_score = check_and_set_high_score,
         play_area_status_text = play_area_status_text,
+        save_settings = G and G.save_settings or nil,
         add_event = G.E_MANAGER and G.E_MANAGER.add_event or nil,
         no_resolve = SMODS and SMODS.no_resolve or nil,
         pseudorandom_probability = SMODS and SMODS.pseudorandom_probability or nil
@@ -355,11 +432,17 @@ local function with_sandbox(fn)
     attention_text = function() end
     highlight_card = function() end
     juice_card = function() end
-    ease_dollars = function() end
+    ease_dollars = function(mod)
+        if G and G.GAME then
+            G.GAME.dollars = (G.GAME.dollars or 0) + (tonumber(mod) or 0)
+        end
+    end
     ease_colour = function() end
+    inc_career_stat = function() end
     check_for_unlock = function() end
     check_and_set_high_score = function() end
     play_area_status_text = function() end
+    if G then G.save_settings = function() end end
     if G.E_MANAGER then
         G.E_MANAGER.add_event = function() return nil end
     end
@@ -381,32 +464,18 @@ local function with_sandbox(fn)
     juice_card = refs.juice_card
     ease_dollars = refs.ease_dollars
     ease_colour = refs.ease_colour
+    inc_career_stat = refs.inc_career_stat
     check_for_unlock = refs.check_for_unlock
     check_and_set_high_score = refs.check_and_set_high_score
     play_area_status_text = refs.play_area_status_text
-    if G.E_MANAGER and refs.add_event then G.E_MANAGER.add_event = refs.add_event end
+    if G then G.save_settings = refs.save_settings end
+    if G.E_MANAGER then G.E_MANAGER.add_event = refs.add_event end
     if SMODS then
         SMODS.no_resolve = refs.no_resolve
         SMODS.pseudorandom_probability = refs.pseudorandom_probability
     end
 
     return ok, result
-end
-
-local function run_queued_events_now(fn)
-    if not G.E_MANAGER then return fn() end
-    local add_event_ref = G.E_MANAGER.add_event
-    G.E_MANAGER.add_event = function(self, event)
-        if event and type(event.func) == "function" then
-            local ok, err = pcall(event.func)
-            if not ok then error(err) end
-        end
-        return event
-    end
-    local ok, result = pcall(fn)
-    G.E_MANAGER.add_event = add_event_ref
-    if not ok then error(result) end
-    return result
 end
 
 local function prepare_virtual_play(selected)
@@ -431,6 +500,39 @@ local function prepare_virtual_play(selected)
     end
 
     G.STATE = G.STATES.HAND_PLAYED
+end
+
+local function simulate_safe_press_play_effects()
+    local blind = G.GAME and G.GAME.blind
+    if not blind or blind.disabled then return end
+
+    if blind.name == "The Hook" then
+        -- The real effect randomly discards hand cards. Preview keeps random
+        -- side effects out of the live hand and only marks the blind triggered
+        -- inside the sandbox.
+        blind.triggered = true
+        return
+    end
+
+    if blind.name == "Crimson Heart" then
+        if G.jokers and G.jokers.cards and G.jokers.cards[1] then
+            blind.triggered = true
+            blind.prepped = true
+        end
+        return
+    end
+
+    if blind.name == "The Fish" then
+        blind.prepped = true
+        return
+    end
+
+    if blind.name == "The Tooth" then
+        local played = G.play and G.play.cards and #G.play.cards or 0
+        G.GAME.dollars = (G.GAME.dollars or 0) - played
+        blind.triggered = true
+        return
+    end
 end
 
 local function final_scoring_hand_from(cards, scoring_hand)
@@ -642,11 +744,7 @@ end
 
 local function run_true_scoring(selected)
     prepare_virtual_play(selected)
-    if G.GAME.blind and type(G.GAME.blind.press_play) == "function" then
-        run_queued_events_now(function()
-            return G.GAME.blind:press_play()
-        end)
-    end
+    simulate_safe_press_play_effects()
 
     for _, parameter in pairs(SMODS.Scoring_Parameters or {}) do
         parameter.current = parameter.default_value
@@ -664,7 +762,6 @@ local function run_true_scoring(selected)
     G.GAME.hands[text].played_this_round = G.GAME.hands[text].played_this_round + 1
     G.GAME.hands[text].played_this_ante = G.GAME.hands[text].played_this_ante + 1
     G.GAME.last_hand_played = text
-    if type(set_hand_usage) == "function" then set_hand_usage(text) end
     G.GAME.hands[text].visible = true
 
     scoring_hand = final_scoring_hand_from(G.play.cards, scoring_hand)

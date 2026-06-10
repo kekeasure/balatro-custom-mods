@@ -13,7 +13,7 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 | Mod | Version | Purpose |
 | --- | --- | --- |
 | [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.0.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard checkpoint. The history menu uses clearer labels such as `Go back before Play #1`. |
-| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.0.0 | Shows a localized pre-play reference score for the selected hand. Standard SMODS probability checks are treated as not triggering in the preview. |
+| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.0.0 | Shows a localized pre-play reference score for the selected hand. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
 
 ## Requirements
 
@@ -53,7 +53,7 @@ Do not place the mod inside an extra nested folder such as:
 - Both mods show English, Simplified Chinese, or Traditional Chinese UI based on the game language.
 - Both mods hook runtime Lua functions, so conflicts are still possible with mods that replace the same UI or scoring functions.
 - Balatro Step Back / 对局回退 restores checkpoints by using Balatro's run save/load shape. Mods that keep unsaved external state may not restore perfectly.
-- Balatro Score Preview / 分数预览 uses a sandboxed scoring simulation. It should work with vanilla and most SMODS-style scoring mods, but mods with external side effects, custom random logic outside SMODS probability helpers, or nonstandard scoring globals can still differ.
+- Balatro Score Preview / 分数预览 uses a sandboxed scoring simulation. It should work with vanilla and most SMODS-style scoring mods, but mods with external side effects, custom random logic outside SMODS probability helpers, custom Boss Blind pre-play events, or nonstandard scoring globals can still differ.
 
 Before reporting an issue, test with only Lovely, Steamodded, and the affected mod enabled.
 
