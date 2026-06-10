@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 分数预览
 
-Version: 1.0.0
+Version: 1.1.0
 
 Shows a sandboxed reference score before playing the selected hand.
 
@@ -58,6 +58,12 @@ The full simulation keeps the run unchanged by snapshotting and restoring state.
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.1.0
+
+- Fixed The Hook Boss Blind preview side effect: selecting cards no longer flips or affects real hand cards.
+- Improved Boss Blind sandboxing and state restoration for hand/play areas, card facing, money, and blind state.
+- Prevented preview calculations from writing hand usage statistics or saving settings.
 
 ### 1.0.0
 
