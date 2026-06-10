@@ -1,46 +1,77 @@
-local Rewind = rawget(_G, "BalatroRewind") or {}
-_G.BalatroRewind = Rewind
+local StepBack = rawget(_G, "BalatroStepBack") or {}
+_G.BalatroStepBack = StepBack
 
-Rewind.history = Rewind.history or {}
-Rewind.max_history = Rewind.max_history or 20
-Rewind.ui = Rewind.ui or { count_text = "0" }
-Rewind.restoring = false
+StepBack.history = StepBack.history or {}
+StepBack.max_history = StepBack.max_history or 20
+StepBack.ui = StepBack.ui or { count_text = "0" }
+StepBack.restoring = false
 
-local function is_chinese_language()
+local function language_key()
     local lang = G and G.SETTINGS and (G.SETTINGS.real_language or G.SETTINGS.language) or nil
-    return type(lang) == "string" and lang:sub(1, 2) == "zh"
+    return type(lang) == "string" and lang:lower() or ""
 end
 
-local rewind_text = {
+local function is_chinese_language()
+    return language_key():sub(1, 2) == "zh"
+end
+
+local function is_traditional_chinese()
+    local lang = language_key()
+    if lang:sub(1, 2) ~= "zh" then return false end
+    return lang:find("tw", 1, true)
+        or lang:find("hk", 1, true)
+        or lang:find("mo", 1, true)
+        or lang:find("hant", 1, true)
+        or lang:find("traditional", 1, true)
+end
+
+local function language_group()
+    if not is_chinese_language() then return "en" end
+    return is_traditional_chinese() and "zh_tw" or "zh_cn"
+end
+
+local stepback_text = {
     en = {
         undo = "Back",
         history = "History",
         history_sub = "List",
-        choose = "Choose a checkpoint",
+        choose = "Choose where to step back",
         no_history = "No checkpoints in this blind",
-        play = "Play",
-        discard = "Discard",
-        before_prefix = "Before ",
-        before_suffix = "",
+        play_restore_prefix = "Go back before Play #",
+        play_restore_suffix = "",
+        discard_restore_prefix = "Go back before Discard #",
+        discard_restore_suffix = "",
         back = "Back"
     },
-    zh = {
+    zh_cn = {
         undo = "回退",
         history = "记录",
         history_sub = "列表",
-        choose = "选择回到哪一步之前",
+        choose = "选择要回到哪一步之前",
         no_history = "当前盲注还没有可回退记录",
-        play = "出牌",
-        discard = "弃牌",
-        before_prefix = "",
-        before_suffix = " 前",
+        play_restore_prefix = "回到第 ",
+        play_restore_suffix = " 次出牌前",
+        discard_restore_prefix = "回到第 ",
+        discard_restore_suffix = " 次弃牌前",
+        back = "返回"
+    },
+    zh_tw = {
+        undo = "回退",
+        history = "記錄",
+        history_sub = "列表",
+        choose = "選擇要回到哪一步之前",
+        no_history = "目前盲注還沒有可回退記錄",
+        play_restore_prefix = "回到第 ",
+        play_restore_suffix = " 次出牌前",
+        discard_restore_prefix = "回到第 ",
+        discard_restore_suffix = " 次棄牌前",
         back = "返回"
     }
 }
 
 local function loc(key)
-    local lang = is_chinese_language() and rewind_text.zh or rewind_text.en
-    return lang[key] or rewind_text.en[key] or key
+    local lang = stepback_text[language_group()] or stepback_text.en
+    return lang[key] or stepback_text.en[key] or key
 end
 
 local function is_pack_state()
@@ -64,15 +95,15 @@ local function current_blind_key()
 end
 
 local function refresh_ui()
-    Rewind.ui.count_text = tostring(#Rewind.history)
+    StepBack.ui.count_text = tostring(#StepBack.history)
 end
 
 local function ensure_current_blind_history()
     local key = current_blind_key()
     if not key then return false end
-    if Rewind.blind_key ~= key then
-        Rewind.blind_key = key
-        Rewind.history = {}
+    if StepBack.blind_key ~= key then
+        StepBack.blind_key = key
+        StepBack.history = {}
         refresh_ui()
     end
     return true
@@ -113,7 +144,7 @@ local function build_save_table()
 end
 
 local function can_capture(kind, hook)
-    if Rewind.restoring then return false end
+    if StepBack.restoring then return false end
     if not G or not G.GAME or not G.hand or not G.hand.highlighted then return false end
     if G.STATE ~= G.STATES.SELECTING_HAND then return false end
     if #G.hand.highlighted <= 0 then return false end
@@ -130,14 +161,6 @@ local function can_capture(kind, hook)
     return false
 end
 
-local function action_label(kind)
-    local round = G.GAME.current_round or {}
-    if kind == "play" then
-        return loc("play") .. " " .. tostring((round.hands_played or 0) + 1)
-    end
-    return loc("discard") .. " " .. tostring((round.discards_used or 0) + 1)
-end
-
 local function action_number(kind)
     local round = G.GAME.current_round or {}
     if kind == "play" then
@@ -146,16 +169,22 @@ local function action_number(kind)
     return (round.discards_used or 0) + 1
 end
 
-local function entry_action_label(entry)
-    if entry and entry.kind then
-        local key = entry.kind == "play" and "play" or "discard"
-        return loc(key) .. " " .. tostring(entry.action_number or "?")
+local function restore_label(kind, number)
+    if kind == "play" then
+        return loc("play_restore_prefix") .. tostring(number or "?") .. loc("play_restore_suffix")
     end
-    return entry and entry.label or "?"
+    return loc("discard_restore_prefix") .. tostring(number or "?") .. loc("discard_restore_suffix")
+end
+
+local function action_label(kind)
+    return restore_label(kind, action_number(kind))
 end
 
 local function entry_restore_label(entry)
-    return loc("before_prefix") .. entry_action_label(entry) .. loc("before_suffix")
+    if entry and entry.kind then
+        return restore_label(entry.kind, entry.action_number)
+    end
+    return entry and entry.label or "?"
 end
 
 local function capture(kind, hook)
@@ -165,47 +194,47 @@ local function capture(kind, hook)
     local save_table = build_save_table()
     if not save_table then return end
 
-    Rewind.history[#Rewind.history + 1] = {
+    StepBack.history[#StepBack.history + 1] = {
         label = action_label(kind),
         kind = kind,
         action_number = action_number(kind),
         save = save_table
     }
 
-    while #Rewind.history > Rewind.max_history do
-        table.remove(Rewind.history, 1)
+    while #StepBack.history > StepBack.max_history do
+        table.remove(StepBack.history, 1)
     end
     refresh_ui()
 end
 
 local function can_undo()
-    if Rewind.restoring then return false end
+    if StepBack.restoring then return false end
     if not G or not G.GAME or not G.STATES then return false end
     if G.STATE ~= G.STATES.SELECTING_HAND then return false end
     ensure_current_blind_history()
-    return #Rewind.history > 0
+    return #StepBack.history > 0
 end
 
 local function restore_snapshot(index)
     if not can_undo() then return end
-    local snapshot = Rewind.history[index]
+    local snapshot = StepBack.history[index]
     if not snapshot or not snapshot.save then return end
 
     local restore_history = {}
     for i = 1, index - 1 do
-        restore_history[i] = Rewind.history[i]
+        restore_history[i] = StepBack.history[i]
     end
 
     local restore_save = copy_table(snapshot.save)
     if G.OVERLAY_MENU then G.FUNCS.exit_overlay_menu() end
 
-    Rewind.restoring = true
+    StepBack.restoring = true
     G.E_MANAGER:clear_queue()
     G:delete_run()
     G:start_run({ savetext = restore_save })
 
-    Rewind.history = restore_history
-    Rewind.blind_key = current_blind_key()
+    StepBack.history = restore_history
+    StepBack.blind_key = current_blind_key()
     refresh_ui()
 
     G.E_MANAGER:add_event(Event({
@@ -213,39 +242,39 @@ local function restore_snapshot(index)
         trigger = "after",
         delay = 0.05,
         func = function()
-            Rewind.restoring = false
+            StepBack.restoring = false
             refresh_ui()
             return true
         end
     }))
 end
 
-G.FUNCS.rewind_can_undo = function(e)
+G.FUNCS.stepback_can_undo = function(e)
     if can_undo() then
         e.config.colour = G.C.GREEN
-        e.config.button = "rewind_undo"
+        e.config.button = "stepback_undo"
     else
         e.config.colour = G.C.UI.BACKGROUND_INACTIVE
         e.config.button = nil
     end
 end
 
-G.FUNCS.rewind_undo = function()
+G.FUNCS.stepback_undo = function()
     if not can_undo() then return end
-    restore_snapshot(#Rewind.history)
+    restore_snapshot(#StepBack.history)
 end
 
-G.FUNCS.rewind_can_open_history = function(e)
+G.FUNCS.stepback_can_open_history = function(e)
     if can_undo() then
         e.config.colour = G.C.ORANGE
-        e.config.button = "rewind_open_history"
+        e.config.button = "stepback_open_history"
     else
         e.config.colour = G.C.UI.BACKGROUND_INACTIVE
         e.config.button = nil
     end
 end
 
-function create_UIBox_rewind_history()
+function create_UIBox_stepback_history()
     ensure_current_blind_history()
 
     local rows = {
@@ -254,13 +283,13 @@ function create_UIBox_rewind_history()
         }}
     }
 
-    if #Rewind.history == 0 then
+    if #StepBack.history == 0 then
         rows[#rows + 1] = { n = G.UIT.R, config = { align = "cm", padding = 0.08 }, nodes = {
             { n = G.UIT.T, config = { text = loc("no_history"), scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
         }}
     else
-        for i, entry in ipairs(Rewind.history) do
-            local func_name = "rewind_restore_" .. tostring(i)
+        for i, entry in ipairs(StepBack.history) do
+            local func_name = "stepback_restore_" .. tostring(i)
             local restore_index = i
             G.FUNCS[func_name] = function()
                 restore_snapshot(restore_index)
@@ -272,7 +301,7 @@ function create_UIBox_rewind_history()
                 minw = 5.2,
                 minh = 0.8,
                 scale = 0.42,
-                colour = i == #Rewind.history and G.C.GREEN or G.C.BLUE
+                colour = i == #StepBack.history and G.C.GREEN or G.C.BLUE
             })
         end
     end
@@ -284,10 +313,10 @@ function create_UIBox_rewind_history()
     })
 end
 
-G.FUNCS.rewind_open_history = function()
+G.FUNCS.stepback_open_history = function()
     if not can_undo() then return end
     G.FUNCS.overlay_menu({
-        definition = create_UIBox_rewind_history()
+        definition = create_UIBox_stepback_history()
     })
 end
 
@@ -305,7 +334,7 @@ end
 
 local original_check_for_unlock = check_for_unlock
 function check_for_unlock(args)
-    if Rewind.restoring and args and args.type == "continue_game" then return end
+    if StepBack.restoring and args and args.type == "continue_game" then return end
     return original_check_for_unlock(args)
 end
 
@@ -317,7 +346,7 @@ function create_UIBox_buttons()
     local undo_button = {
         n = G.UIT.C,
         config = {
-            id = "rewind_undo_button",
+            id = "stepback_undo_button",
             align = "tm",
             minw = button_width,
             minh = 1.3,
@@ -325,16 +354,16 @@ function create_UIBox_buttons()
             r = 0.1,
             hover = true,
             colour = G.C.UI.BACKGROUND_INACTIVE,
-            button = "rewind_undo",
+            button = "stepback_undo",
             shadow = true,
-            func = "rewind_can_undo"
+            func = "stepback_can_undo"
         },
         nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
                 { n = G.UIT.T, config = { text = loc("undo"), scale = text_scale, colour = G.C.UI.TEXT_LIGHT } }
             }},
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
-                { n = G.UIT.T, config = { ref_table = Rewind.ui, ref_value = "count_text", scale = text_scale * 0.7, colour = G.C.UI.TEXT_LIGHT } }
+                { n = G.UIT.T, config = { ref_table = StepBack.ui, ref_value = "count_text", scale = text_scale * 0.7, colour = G.C.UI.TEXT_LIGHT } }
             }}
         }
     }
@@ -342,7 +371,7 @@ function create_UIBox_buttons()
     local history_button = {
         n = G.UIT.C,
         config = {
-            id = "rewind_history_button",
+            id = "stepback_history_button",
             align = "tm",
             minw = button_width,
             minh = 1.3,
@@ -350,9 +379,9 @@ function create_UIBox_buttons()
             r = 0.1,
             hover = true,
             colour = G.C.UI.BACKGROUND_INACTIVE,
-            button = "rewind_open_history",
+            button = "stepback_open_history",
             shadow = true,
-            func = "rewind_can_open_history"
+            func = "stepback_can_open_history"
         },
         nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {

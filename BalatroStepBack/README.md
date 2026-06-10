@@ -1,4 +1,4 @@
-# Balatro Rewind / 对局回退
+# Balatro Step Back / 对局回退
 
 [中文说明](./README.zh-CN.md)
 
@@ -10,10 +10,12 @@ Version: 1.0.0
 
 ## What It Does
 
-Balatro Rewind / 对局回退 adds checkpoints inside the current blind.
+Balatro Step Back / 对局回退 adds checkpoints inside the current blind.
 
 - English UI: `Back` returns to the latest play/discard checkpoint, and `History` opens the checkpoint list.
-- Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
+- Simplified Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
+- Traditional Chinese UI: `回退` returns to the latest play/discard checkpoint, and `記錄` opens the checkpoint list.
+- History entries use clearer labels, such as `Go back before Play #1`, `回到第 1 次出牌前`, and `回到第 1 次棄牌前`.
 - History is limited to the current blind. Choosing an earlier checkpoint discards later checkpoint history.
 
 ## Requirements
@@ -29,7 +31,7 @@ This archive does not include Balatro, Lovely, Steamodded, or any game files.
 1. Install Lovely.
 2. Install Steamodded / SMODS.
 3. Extract this archive.
-4. Put the `BalatroRewind` folder into:
+4. Put the `BalatroStepBack` folder into:
 
 ```text
 %AppData%\Balatro\Mods
@@ -38,12 +40,12 @@ This archive does not include Balatro, Lovely, Steamodded, or any game files.
 The final layout should be:
 
 ```text
-%AppData%\Balatro\Mods\BalatroRewind\manifest.json
-%AppData%\Balatro\Mods\BalatroRewind\main.lua
-%AppData%\Balatro\Mods\BalatroRewind\README.md
+%AppData%\Balatro\Mods\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack\main.lua
+%AppData%\Balatro\Mods\BalatroStepBack\README.md
 ```
 
-5. Start Balatro and confirm `Balatro Rewind` or `Rewind / 对局回退` appears in the Steamodded mod list.
+5. Start Balatro and confirm `Balatro Step Back` or `Step Back / 对局回退` appears in the Steamodded mod list.
 
 ## Compatibility Notes
 
@@ -55,7 +57,7 @@ Known limits:
 
 - History is limited to the current blind.
 - Restoring a checkpoint briefly reloads the run state.
-- Mods that store unsaved external state may not rewind perfectly.
+- Mods that store unsaved external state may not restore perfectly.
 - If a crash happens, test again with only Lovely, Steamodded, and this mod enabled.
 
 ## Publishing Notes
@@ -69,7 +71,9 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 - Bumped the public version to 1.0.0.
 - Added language-aware UI labels.
 - English game language now shows `Back`, `History`, and English history-menu text.
-- Chinese game language keeps `回退`, `记录`, and Chinese history-menu text.
+- Simplified Chinese game language shows `回退`, `记录`, and Simplified Chinese history-menu text.
+- Traditional Chinese game language shows `回退`, `記錄`, and Traditional Chinese history-menu text.
+- History entries now use clearer "go back before..." labels.
 
 ### 0.2.0
 

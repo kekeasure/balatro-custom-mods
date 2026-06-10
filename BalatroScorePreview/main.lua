@@ -1,13 +1,32 @@
 local ScorePreview = rawget(_G, "BalatroScorePreview") or {}
 _G.BalatroScorePreview = ScorePreview
 
-local function is_chinese_language()
+local function language_key()
     local lang = G and G.SETTINGS and (G.SETTINGS.real_language or G.SETTINGS.language) or nil
-    return type(lang) == "string" and lang:sub(1, 2) == "zh"
+    return type(lang) == "string" and lang:lower() or ""
+end
+
+local function is_traditional_chinese()
+    local lang = language_key()
+    if lang:sub(1, 2) ~= "zh" then return false end
+    return lang:find("tw", 1, true)
+        or lang:find("hk", 1, true)
+        or lang:find("mo", 1, true)
+        or lang:find("hant", 1, true)
+        or lang:find("traditional", 1, true)
+end
+
+local function language_group()
+    local lang = language_key()
+    if lang:sub(1, 2) ~= "zh" then return "en" end
+    return is_traditional_chinese() and "zh_tw" or "zh_cn"
 end
 
 local function preview_prefix()
-    return is_chinese_language() and "参考值：" or "Reference: "
+    local lang = language_group()
+    if lang == "zh_cn" then return "参考值：" end
+    if lang == "zh_tw" then return "參考值：" end
+    return "Reference: "
 end
 
 local function preview_idle_text()
