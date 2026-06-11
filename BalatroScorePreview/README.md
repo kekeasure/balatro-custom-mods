@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 分数预览
 
-Version: 1.2.1
+Version: 1.2.2
 
 Shows a sandboxed reference score before playing the selected hand.
 
@@ -59,6 +59,13 @@ The full simulation keeps the run unchanged by snapshotting and restoring state.
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.2.2
+
+- Fixed sandbox restoration for card centers after previewed scoring effects such as Vampire remove an enhancement.
+- Prevented preview calculations from leaving enhanced playing cards with a base-card center, which could make the card tooltip show `ERROR`.
+- Added a narrow repair pass for saves already affected by this issue, restoring vanilla enhancement centers such as Gold or Lucky Card when their ability data is intact.
+- Updated the public version to 1.2.2.
 
 ### 1.2.1
 

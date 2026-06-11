@@ -243,6 +243,51 @@ local function collect_cards()
     return cards
 end
 
+local enhancement_center_by_effect = {
+    ["Bonus Card"] = "m_bonus",
+    ["Mult Card"] = "m_mult",
+    ["Wild Card"] = "m_wild",
+    ["Glass Card"] = "m_glass",
+    ["Steel Card"] = "m_steel",
+    ["Stone Card"] = "m_stone",
+    ["Gold Card"] = "m_gold",
+    ["Lucky Card"] = "m_lucky"
+}
+
+local function get_center_key(card)
+    if not card or not card.config then return nil end
+    if card.config.center_key then return card.config.center_key end
+    local center = card.config.center
+    if type(center) == "string" then return center end
+    if type(center) == "table" then return center.key end
+    return nil
+end
+
+local function repair_card_center(card)
+    if not card or not card.ability or card.ability.set ~= "Enhanced" then return false end
+    if get_center_key(card) ~= "c_base" then return false end
+
+    local center_key = enhancement_center_by_effect[card.ability.effect]
+        or enhancement_center_by_effect[card.ability.name]
+    local center = center_key and G.P_CENTERS and G.P_CENTERS[center_key]
+    if not center then return false end
+
+    card.config = card.config or {}
+    card.config.center_key = center_key
+    card.config.center = center
+    card.label = center.label or card.label
+    return true
+end
+
+local function repair_known_enhancement_centers()
+    local repaired = false
+    if not G or not G.P_CENTERS then return repaired end
+    for _, card in ipairs(collect_cards()) do
+        repaired = repair_card_center(card) or repaired
+    end
+    return repaired
+end
+
 local function capture_state()
     local snapshot = {
         state = G.STATE,
@@ -323,13 +368,25 @@ local function capture_state()
             card = card,
             area = card.area,
             parent = card.parent,
+            config_center_key = card.config and card.config.center_key or nil,
+            config_center = card.config and card.config.center or nil,
+            config_card_key = card.config and card.config.card_key or nil,
+            config_card = card.config and card.config.card or nil,
             ability = deep_copy(card.ability),
             base = deep_copy(card.base),
+            label = card.label,
+            base_cost = card.base_cost,
+            extra_cost = card.extra_cost,
+            cost = card.cost,
+            sell_cost = card.sell_cost,
+            added_to_deck = card.added_to_deck,
             debuff = card.debuff,
             debuffed_by_blind = card.debuffed_by_blind,
             destroyed = card.destroyed,
             shattered = card.shattered,
             getting_sliced = card.getting_sliced,
+            vampired = card.vampired,
+            front_hidden = card.front_hidden,
             lucky_trigger = card.lucky_trigger,
             repetition_trigger = card.repetition_trigger,
             highlighted = card.highlighted,
@@ -361,15 +418,30 @@ local function restore_state(snapshot)
     for _, state in ipairs(snapshot.card_states or {}) do
         local card = state.card
         if card then
+            card.config = card.config or {}
+            card.config.center_key = state.config_center_key
+            card.config.center = (state.config_center_key and G.P_CENTERS and G.P_CENTERS[state.config_center_key])
+                or state.config_center
+            card.config.card_key = state.config_card_key
+            card.config.card = (state.config_card_key and G.P_CARDS and G.P_CARDS[state.config_card_key])
+                or state.config_card
             card.area = state.area
             card.parent = state.parent
             card.ability = deep_copy(state.ability)
             card.base = deep_copy(state.base)
+            card.label = state.label
+            card.base_cost = state.base_cost
+            card.extra_cost = state.extra_cost
+            card.cost = state.cost
+            card.sell_cost = state.sell_cost
+            card.added_to_deck = state.added_to_deck
             card.debuff = state.debuff
             card.debuffed_by_blind = state.debuffed_by_blind
             card.destroyed = state.destroyed
             card.shattered = state.shattered
             card.getting_sliced = state.getting_sliced
+            card.vampired = state.vampired
+            card.front_hidden = state.front_hidden
             card.lucky_trigger = state.lucky_trigger
             card.repetition_trigger = state.repetition_trigger
             card.highlighted = state.highlighted
@@ -1004,6 +1076,8 @@ function ScorePreview.update()
         set_idle()
         return
     end
+
+    repair_known_enhancement_centers()
 
     if not G.hand or not G.hand.highlighted or #G.hand.highlighted == 0 then
         ScorePreview.cache.signature = nil
