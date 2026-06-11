@@ -151,9 +151,8 @@ end
 
 local function card_is_hidden(card)
     if not card then return false end
-    if card.facing == "back" or card.sprite_facing == "back" then return true end
-    if card.flipping then return true end
-    if card.ability and card.ability.wheel_flipped then return true end
+    if card.facing == "back" then return true end
+    if card.ability and card.ability.wheel_flipped == true then return true end
     return false
 end
 
@@ -184,8 +183,6 @@ local function selection_signature()
         parts[#parts + 1] = tostring(card.seal or "")
         parts[#parts + 1] = tostring(card.edition and (card.edition.key or card.edition.type) or "")
         parts[#parts + 1] = tostring(card.facing or "")
-        parts[#parts + 1] = tostring(card.sprite_facing or "")
-        parts[#parts + 1] = tostring(card.flipping or "")
         parts[#parts + 1] = tostring(card.ability and card.ability.wheel_flipped or "")
     end
 
