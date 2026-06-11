@@ -6,7 +6,8 @@ New-Item -ItemType Directory -Force -Path $dist | Out-Null
 
 $mods = @(
     @{ Name = "BalatroStepBack"; Version = "1.1.0" },
-    @{ Name = "BalatroScorePreview"; Version = "1.2.2" }
+    @{ Name = "BalatroScorePreview"; Version = "1.2.2" },
+    @{ Name = "BalatroModifierWarning"; Version = "1.0.0" }
 )
 
 foreach ($mod in $mods) {

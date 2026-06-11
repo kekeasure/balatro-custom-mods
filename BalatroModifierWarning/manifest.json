@@ -1,0 +1,13 @@
+{
+  "id": "BalatroModifierWarning",
+  "name": "Balatro Modifier Warning",
+  "display_name": "Modifier Warning / 覆盖提醒",
+  "author": ["ZhiSunian"],
+  "description": "Shows a subtle orange warning frame when a selected consumable would replace an existing card enhancement or seal. Chinese name: 覆盖提醒.",
+  "prefix": "modifierwarning",
+  "version": "1.0.0",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "E67E22",
+  "badge_text_colour": "FFFFFF"
+}

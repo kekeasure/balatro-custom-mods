@@ -8,19 +8,21 @@ Use this before publishing to GitHub Releases or Nexus Mods.
 
 - `BalatroStepBack/manifest.json` has the correct version and author.
 - `BalatroScorePreview/manifest.json` has the correct version and author.
-- Each mod folder contains only files needed by users: `manifest.json`, `main.lua`, `README.md`.
+- `BalatroModifierWarning/manifest.json` has the correct version and author.
+- Each mod folder contains only files needed by users: `manifest.json`, `main.lua`, `README.md`, `README.zh-CN.md`.
 - No Balatro game files, Lovely files, Steamodded files, generated dumps, logs, screenshots, save files, or user paths are included.
 
 ## Packaging
 
 - `BalatroStepBack-<version>.zip` contains `BalatroStepBack/manifest.json` at the first folder level.
 - `BalatroScorePreview-<version>.zip` contains `BalatroScorePreview/manifest.json` at the first folder level.
+- `BalatroModifierWarning-<version>.zip` contains `BalatroModifierWarning/manifest.json` at the first folder level.
 - Extracting the zip does not create an extra nested folder.
 
 ## Local Validation
 
 - Launch Balatro with Lovely and Steamodded.
-- Confirm both mods appear in the Steamodded mod list.
+- Confirm all packaged mods appear in the Steamodded mod list.
 - Test Balatro Step Back / 对局回退:
   - In English, confirm the buttons show `Back` and `History`.
   - In Simplified Chinese, confirm the buttons show `回退` and `记录`, and the history list uses labels like `回到第 1 次出牌前`.
@@ -34,6 +36,10 @@ Use this before publishing to GitHub Releases or Nexus Mods.
   - In Traditional Chinese, select cards and check `參考值：...` appears.
   - Test at least one normal Joker scoring case.
   - Test one probability case, such as Lucky Card, and confirm the preview uses the non-trigger reference value.
+- Test Balatro Modifier Warning / 覆盖提醒:
+  - Select an enhancement Tarot, then select a playing card that already has a different enhancement and confirm the orange warning frame appears.
+  - Select a vanilla seal Spectral card, then select a playing card that already has a different seal and confirm the orange warning frame appears.
+  - Select a base card or same-modifier target and confirm no warning frame appears.
 
 ## Nexus Page
 

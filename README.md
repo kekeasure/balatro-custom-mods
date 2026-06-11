@@ -14,6 +14,7 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 | --- | --- | --- |
 | [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.1.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard/held-consumable checkpoint. The history menu uses clearer labels such as `Go back before Play #1` and `Go back before Consumable #1`. |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | Shows a localized pre-play reference score for the selected hand. Selected logically face-down cards show an unknown value. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
+| [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.0.0 | Adds a subtle orange warning frame when a selected consumable would replace an existing playing-card enhancement or seal. |
 
 ## Requirements
 
@@ -38,6 +39,7 @@ The final layout should look like this:
 ```text
 %AppData%\Balatro\Mods\BalatroStepBack\manifest.json
 %AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
+%AppData%\Balatro\Mods\BalatroModifierWarning\manifest.json
 ```
 
 Do not place the mod inside an extra nested folder such as:
@@ -50,8 +52,8 @@ Do not place the mod inside an extra nested folder such as:
 
 - These mods do not edit Balatro's installed game files.
 - These mods do not include executable binaries, DLLs, game assets, textures, sounds, or copyrighted Balatro content.
-- Both mods show English, Simplified Chinese, or Traditional Chinese UI based on the game language.
-- Both mods hook runtime Lua functions, so conflicts are still possible with mods that replace the same UI or scoring functions.
+- Mods with UI text show English, Simplified Chinese, or Traditional Chinese UI based on the game language.
+- These mods hook runtime Lua functions or draw steps, so conflicts are still possible with mods that replace the same UI, scoring, or card drawing functions.
 - Balatro Step Back / 对局回退 restores checkpoints by using Balatro's run save/load shape. Mods that keep unsaved external state may not restore perfectly.
 - Balatro Score Preview / 分数预览 uses a sandboxed scoring simulation. It should work with vanilla and most SMODS-style scoring mods, but mods with external side effects, custom random logic outside SMODS probability helpers, custom Boss Blind pre-play events, or nonstandard scoring globals can still differ.
 
@@ -71,6 +73,14 @@ BalatroStepBack/
 
 ```text
 BalatroScorePreview/
+  manifest.json
+  main.lua
+  README.md
+  README.zh-CN.md
+```
+
+```text
+BalatroModifierWarning/
   manifest.json
   main.lua
   README.md

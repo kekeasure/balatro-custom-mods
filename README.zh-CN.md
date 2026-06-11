@@ -12,6 +12,7 @@
 | --- | --- | --- |
 | [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.1.0 | 在当前盲注内记录出牌/弃牌/使用持有消耗牌前的检查点，可回到最近一次或更早的操作前，并按游戏语言显示英文、简体中文或繁体中文 UI；历史列表会显示为“回到第 1 次出牌前”“回到第 1 次使用消耗牌前”等更直观的格式。 |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | 在出牌前显示所选手牌的参考分数，并按游戏语言显示英文、简体中文或繁体中文 UI；选中的牌处于逻辑背面状态时显示未知值；常规 SMODS 概率判定在预览中按“不触发”处理，原版 Boss Blind 的随机弃牌/翻面等出牌前副作用不会真实作用到手牌。 |
+| [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.0.0 | 当当前选中的消耗牌会替换目标扑克牌已有的增强牌或蜡封时，在目标牌上显示小型橙色警告框。 |
 
 ## 依赖
 
@@ -36,6 +37,7 @@
 ```text
 %AppData%\Balatro\Mods\BalatroStepBack\manifest.json
 %AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
+%AppData%\Balatro\Mods\BalatroModifierWarning\manifest.json
 ```
 
 不要多套一层文件夹，例如不要变成：
@@ -48,8 +50,8 @@
 
 - 这些模组不会修改 Balatro 的游戏安装文件。
 - 这些模组不包含可执行二进制文件、DLL、游戏素材、贴图、音频或受版权保护的 Balatro 内容。
-- 模组会根据游戏语言显示英文、简体中文或繁体中文 UI。
-- 两个模组都会在运行时挂接 Lua 函数，因此仍可能与改写同一 UI 或计分函数的其他模组冲突。
+- 带有 UI 文本的模组会根据游戏语言显示英文、简体中文或繁体中文 UI。
+- 这些模组会在运行时挂接 Lua 函数或绘制步骤，因此仍可能与改写同一 UI、计分或卡牌绘制函数的其他模组冲突。
 - Balatro Step Back / 对局回退 使用 Balatro 的对局保存/读取数据结构来恢复检查点。保存额外外部状态的模组可能无法被完全回退。
 - Balatro Score Preview / 分数预览 使用沙盒试算。它应能兼容原版和大多数按 SMODS 标准计分流程编写的模组，但如果其他模组有外部副作用、自定义随机逻辑、自定义 Boss Blind 出牌前事件或非标准计分全局状态，预览值仍可能与最终值不同。
 
@@ -69,6 +71,14 @@ BalatroStepBack/
 
 ```text
 BalatroScorePreview/
+  manifest.json
+  main.lua
+  README.md
+  README.zh-CN.md
+```
+
+```text
+BalatroModifierWarning/
   manifest.json
   main.lua
   README.md

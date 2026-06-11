@@ -8,6 +8,7 @@
 
 - `BalatroStepBack/manifest.json` 中的版本号和作者正确。
 - `BalatroScorePreview/manifest.json` 中的版本号和作者正确。
+- `BalatroModifierWarning/manifest.json` 中的版本号和作者正确。
 - 每个模组文件夹只包含用户需要的文件：`manifest.json`、`main.lua`、`README.md`、`README.zh-CN.md`。
 - 不包含 Balatro 游戏文件、Lovely 文件、Steamodded 文件、生成 dump、日志、截图、存档或个人本机路径。
 
@@ -15,12 +16,13 @@
 
 - `BalatroStepBack-<version>.zip` 解压后第一层有 `BalatroStepBack/manifest.json`。
 - `BalatroScorePreview-<version>.zip` 解压后第一层有 `BalatroScorePreview/manifest.json`。
+- `BalatroModifierWarning-<version>.zip` 解压后第一层有 `BalatroModifierWarning/manifest.json`。
 - 解压后不会多出额外嵌套文件夹。
 
 ## 本地验证
 
 - 使用 Lovely 和 Steamodded 启动 Balatro。
-- 确认两个模组都出现在 Steamodded 模组列表中。
+- 确认所有打包模组都出现在 Steamodded 模组列表中。
 - 测试 Balatro Step Back / 对局回退：
   - 英文环境下确认按钮显示 `Back` 和 `History`。
   - 简体中文环境下确认按钮显示 `回退` 和 `记录`，历史列表显示类似 `回到第 1 次出牌前`。
@@ -34,6 +36,10 @@
   - 繁体中文环境下选择手牌并确认出现 `參考值：...`。
   - 测试至少一种普通小丑牌计分情况。
   - 测试一种概率情况，例如 Lucky Card，并确认预览使用“不触发”的参考值。
+- 测试 Balatro Modifier Warning / 覆盖提醒：
+  - 选中一张增强塔罗牌，再选择一张已有不同增强牌的扑克牌，确认出现橙色警告框。
+  - 选中一张原版蜡封幻灵牌，再选择一张已有不同蜡封的扑克牌，确认出现橙色警告框。
+  - 选择普通牌或已有相同效果的目标牌，确认不会出现警告框。
 
 ## Nexus 页面
 
