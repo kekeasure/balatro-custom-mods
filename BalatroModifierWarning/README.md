@@ -4,9 +4,9 @@ Author: ZhiSunian
 
 Chinese name: 覆盖提醒
 
-Version: 1.1.0
+Version: 1.1.1
 
-Shows a clear replacement warning badge on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot. The badge shows `REPLACE!` and the old-to-new modifier relationship, such as `Gold > Glass`.
+Shows a clear replacement warning badge on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot. The badge shows `REPLACE!` and the old-to-new modifier relationship, such as `Gold → Glass`.
 
 ## What It Warns About
 
@@ -35,10 +35,16 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 
 ## Changelog
 
+### 1.1.1
+
+- Enlarged the replacement badge and added more spacing between the title and modifier relationship.
+- Replaced the text `>` separator with a drawn right arrow between the old and new modifier names.
+- Clamped the badge in game-coordinate space so it stays comfortable across windowed, borderless, and common high-resolution layouts.
+
 ### 1.1.0
 
 - Replaced the subtle orange frame with a clearer red-orange replacement badge.
-- The warning now explicitly shows the overwrite relationship, such as `Gold > Glass` or `Red > Gold`.
+- The warning now explicitly shows the overwrite relationship, such as `Gold → Glass` or `Red → Gold`.
 - The badge is drawn as a readable horizontal label near the target card instead of trying to outline the tilted card.
 
 ### 1.0.1

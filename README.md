@@ -14,7 +14,7 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 | --- | --- | --- |
 | [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.1.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard/held-consumable checkpoint. The history menu uses clearer labels such as `Go back before Play #1` and `Go back before Consumable #1`. |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | Shows a localized pre-play reference score for the selected hand. Selected logically face-down cards show an unknown value. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
-| [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.1.0 | Adds a clear replacement warning badge with old-to-new modifier text when a selected consumable would replace an existing playing-card enhancement or seal. |
+| [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.1.1 | Adds a clear replacement warning badge with old-to-new modifier text when a selected consumable would replace an existing playing-card enhancement or seal. |
 
 ## Requirements
 
