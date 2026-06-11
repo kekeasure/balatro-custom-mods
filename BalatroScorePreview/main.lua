@@ -33,6 +33,12 @@ local function preview_idle_text()
     return preview_prefix() .. "-"
 end
 
+local function preview_unknown_text()
+    local lang = language_group()
+    if lang == "zh_cn" or lang == "zh_tw" then return preview_prefix() .. "？？？" end
+    return preview_prefix() .. "???"
+end
+
 ScorePreview.ui = ScorePreview.ui or {
     line = preview_idle_text()
 }
@@ -143,6 +149,27 @@ local function sorted_selected_cards()
     return cards
 end
 
+local function card_is_hidden(card)
+    if not card then return false end
+    if card.facing == "back" or card.sprite_facing == "back" then return true end
+    if card.flipping then return true end
+    if card.ability and card.ability.wheel_flipped then return true end
+    return false
+end
+
+local function hand_has_hidden_cards()
+    if not G or not G.hand then return false end
+
+    for _, card in ipairs(G.hand.cards or {}) do
+        if card_is_hidden(card) then return true end
+    end
+    for _, card in ipairs(G.hand.highlighted or {}) do
+        if card_is_hidden(card) then return true end
+    end
+
+    return false
+end
+
 local function selection_signature()
     if not G or not G.GAME or not G.hand or not G.hand.highlighted then return "none" end
 
@@ -161,6 +188,16 @@ local function selection_signature()
         parts[#parts + 1] = tostring(card.config and card.config.center_key or "")
         parts[#parts + 1] = tostring(card.seal or "")
         parts[#parts + 1] = tostring(card.edition and (card.edition.key or card.edition.type) or "")
+    end
+
+    parts[#parts + 1] = "hand_visibility"
+    for i, card in ipairs(G.hand.cards or {}) do
+        parts[#parts + 1] = tostring(i)
+        parts[#parts + 1] = tostring(card.unique_val or "")
+        parts[#parts + 1] = tostring(card.facing or "")
+        parts[#parts + 1] = tostring(card.sprite_facing or "")
+        parts[#parts + 1] = tostring(card.flipping or "")
+        parts[#parts + 1] = tostring(card.ability and card.ability.wheel_flipped or "")
     end
 
     local function append_area(area, label)
@@ -933,6 +970,10 @@ local function calculate_preview()
     if not SMODS or not SMODS.Scoring_Parameters then return nil end
 
     local selected = sorted_selected_cards()
+    if hand_has_hidden_cards() then
+        return { mode = "hidden" }
+    end
+
     local snapshot = capture_state()
     local ok, result = with_sandbox(function()
         return run_true_scoring(selected)
@@ -959,6 +1000,11 @@ end
 local function apply_result(result)
     if not result then
         set_unavailable()
+        return
+    end
+
+    if result.mode == "hidden" then
+        ScorePreview.ui.line = preview_unknown_text()
         return
     end
 

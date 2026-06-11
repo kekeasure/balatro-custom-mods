@@ -13,6 +13,7 @@ Shows a sandboxed reference score before playing the selected hand.
 ## What It Does
 
 - Shows `Reference: XXXXX` in English, `参考值：XXXXX` in Simplified Chinese, and `參考值：XXXXX` in Traditional Chinese when cards are selected.
+- Shows `Reference: ???`, `参考值：？？？`, or `參考值：？？？` when any card in hand is face-down, so hidden card information is not revealed.
 - Prefers a full sandbox simulation: temporarily runs the real scoring path, then restores the run state.
 - Covers normal poker hands, scoring cards, held-card effects, Jokers, enhancements, seals, deck final scoring steps, and other real scoring paths.
 - Handles vanilla Boss Blind scoring conditions in the sandbox. Random or disruptive pre-play effects such as The Hook are not executed on the live hand; deterministic effects such as The Tooth are simulated and then restored.
@@ -63,6 +64,7 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 
 - Fixed The Hook Boss Blind preview side effect: selecting cards no longer flips or affects real hand cards.
 - Fixed final-hand effects such as Acrobat and Dusk by simulating the real pre-scoring hand spend during preview.
+- Hidden hand cards now show an unknown preview value instead of revealing the real score.
 - Improved Boss Blind sandboxing and state restoration for hand/play areas, card facing, money, and blind state.
 - Improved restoration for the playing-card list and card-area limits after sandboxed effects such as DNA.
 - Prevented preview calculations from writing hand usage statistics or saving settings.
