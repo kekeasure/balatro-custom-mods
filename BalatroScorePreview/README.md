@@ -62,7 +62,9 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 ### 1.1.0
 
 - Fixed The Hook Boss Blind preview side effect: selecting cards no longer flips or affects real hand cards.
+- Fixed final-hand effects such as Acrobat and Dusk by simulating the real pre-scoring hand spend during preview.
 - Improved Boss Blind sandboxing and state restoration for hand/play areas, card facing, money, and blind state.
+- Improved restoration for the playing-card list and card-area limits after sandboxed effects such as DNA.
 - Prevented preview calculations from writing hand usage statistics or saving settings.
 
 ### 1.0.0

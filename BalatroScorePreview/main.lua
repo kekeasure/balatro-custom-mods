@@ -99,7 +99,8 @@ local function capture_area_states()
         if area and area.cards then
             states[name] = {
                 cards = shallow_copy_array(area.cards),
-                highlighted = shallow_copy_array(area.highlighted or {})
+                highlighted = shallow_copy_array(area.highlighted or {}),
+                card_limit = area.config and area.config.card_limit or nil
             }
         end
     end
@@ -118,6 +119,7 @@ local function restore_area_states(states)
                 end
             end
             if area.highlighted then area.highlighted = shallow_copy_array(state.highlighted) end
+            if area.config and state.card_limit ~= nil then area.config.card_limit = state.card_limit end
             if type(area.set_ranks) == "function" then pcall(function() area:set_ranks() end) end
             if type(area.align_cards) == "function" then pcall(function() area:align_cards() end) end
         end
@@ -234,9 +236,18 @@ local function capture_state()
             consumeable_buffer = G.GAME.consumeable_buffer,
             last_hand_played = G.GAME.last_hand_played,
             saved_text = G.GAME.saved_text,
+            hands_played = G.GAME.hands_played,
+            playing_card = G.playing_card,
+            playing_cards = shallow_copy_array(G.playing_cards or {}),
             probabilities = deep_copy(G.GAME.probabilities),
             pseudorandom = deep_copy(G.GAME.pseudorandom),
-            current_hand = deep_copy(G.GAME.current_round and G.GAME.current_round.current_hand or {}),
+            current_round = G.GAME.current_round and {
+                hands_left = G.GAME.current_round.hands_left,
+                hands_played = G.GAME.current_round.hands_played,
+                discards_left = G.GAME.current_round.discards_left,
+                discards_used = G.GAME.current_round.discards_used,
+                current_hand = deep_copy(G.GAME.current_round.current_hand or {})
+            } or nil,
             hands = deep_copy(G.GAME.hands or {}),
             hand_usage = deep_copy(G.GAME.hand_usage or {}),
             cards_played = deep_copy(G.GAME.cards_played or {}),
@@ -354,10 +365,19 @@ local function restore_state(snapshot)
         G.GAME.consumeable_buffer = snapshot.game.consumeable_buffer
         G.GAME.last_hand_played = snapshot.game.last_hand_played
         G.GAME.saved_text = snapshot.game.saved_text
+        G.GAME.hands_played = snapshot.game.hands_played
+        G.playing_card = snapshot.game.playing_card
+        G.playing_cards = shallow_copy_array(snapshot.game.playing_cards)
         G.GAME.probabilities = deep_copy(snapshot.game.probabilities)
         G.GAME.pseudorandom = deep_copy(snapshot.game.pseudorandom)
-        if G.GAME.current_round and G.GAME.current_round.current_hand then
-            restore_table(G.GAME.current_round.current_hand, snapshot.game.current_hand)
+        if G.GAME.current_round and snapshot.game.current_round then
+            G.GAME.current_round.hands_left = snapshot.game.current_round.hands_left
+            G.GAME.current_round.hands_played = snapshot.game.current_round.hands_played
+            G.GAME.current_round.discards_left = snapshot.game.current_round.discards_left
+            G.GAME.current_round.discards_used = snapshot.game.current_round.discards_used
+            if G.GAME.current_round.current_hand then
+                restore_table(G.GAME.current_round.current_hand, snapshot.game.current_round.current_hand)
+            end
         end
         if G.GAME.hands then restore_table(G.GAME.hands, snapshot.game.hands) end
         if G.GAME.hand_usage then restore_table(G.GAME.hand_usage, snapshot.game.hand_usage) end
@@ -500,6 +520,20 @@ local function prepare_virtual_play(selected)
     end
 
     G.STATE = G.STATES.HAND_PLAYED
+end
+
+local function simulate_play_start_state(selected)
+    if G.GAME and G.GAME.current_round then
+        G.GAME.current_round.hands_left = (G.GAME.current_round.hands_left or 0) - 1
+    end
+
+    if G.GAME and G.GAME.round_scores and G.GAME.round_scores.cards_played then
+        G.GAME.round_scores.cards_played.amt = (G.GAME.round_scores.cards_played.amt or 0) + #(selected or {})
+    end
+
+    for _, card in ipairs(selected or {}) do
+        if card.base then card.base.times_played = (card.base.times_played or 0) + 1 end
+    end
 end
 
 local function simulate_safe_press_play_effects()
@@ -744,6 +778,7 @@ end
 
 local function run_true_scoring(selected)
     prepare_virtual_play(selected)
+    simulate_play_start_state(selected)
     simulate_safe_press_play_effects()
 
     for _, parameter in pairs(SMODS.Scoring_Parameters or {}) do
