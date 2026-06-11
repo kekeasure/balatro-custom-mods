@@ -12,8 +12,8 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 
 | Mod | Version | Purpose |
 | --- | --- | --- |
-| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.0.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard checkpoint. The history menu uses clearer labels such as `Go back before Play #1`. |
-| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.0 | Shows a localized pre-play reference score for the selected hand. Selected face-down cards show an unknown value. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
+| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.1.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard/held-consumable checkpoint. The history menu uses clearer labels such as `Go back before Play #1` and `Go back before Consumable #1`. |
+| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.1 | Shows a localized pre-play reference score for the selected hand. Selected logically face-down cards show an unknown value. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
 
 ## Requirements
 
@@ -43,7 +43,7 @@ The final layout should look like this:
 Do not place the mod inside an extra nested folder such as:
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-1.0.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack-1.1.0\BalatroStepBack\manifest.json
 ```
 
 ## Compatibility And Safety

@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 对局回退
 
-Version: 1.0.0
+Version: 1.1.0
 
 ## What It Does
 
@@ -15,8 +15,9 @@ Balatro Step Back / 对局回退 adds checkpoints inside the current blind.
 - English UI: `Back` returns to the latest play/discard checkpoint, and `History` opens the checkpoint list.
 - Simplified Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
 - Traditional Chinese UI: `回退` returns to the latest play/discard checkpoint, and `記錄` opens the checkpoint list.
-- History entries use clearer labels, such as `Go back before Play #1`, `回到第 1 次出牌前`, and `回到第 1 次棄牌前`.
+- History entries use clearer labels, such as `Go back before Play #1`, `Go back before Consumable #1`, `回到第 1 次出牌前`, and `回到第 1 次使用消耗牌前`.
 - History is limited to the current blind. Choosing an earlier checkpoint discards later checkpoint history.
+- Using a held consumable during a blind now creates a checkpoint first, so stepping back can restore Tarot, Planet, and Spectral cards to the consumable area.
 
 ## Requirements
 
@@ -65,6 +66,12 @@ Known limits:
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.1.0
+
+- Added checkpoints before using held consumables during a blind.
+- Fixed used held consumables, such as Tarot cards, not returning to the consumable area after stepping back.
+- Updated the public version to 1.1.0.
 
 ### 1.0.0
 

@@ -10,8 +10,8 @@
 
 | 模组 | 版本 | 用途 |
 | --- | --- | --- |
-| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.0.0 | 在当前盲注内记录出牌/弃牌前的检查点，可回到最近一次或更早的操作前，并按游戏语言显示英文、简体中文或繁体中文 UI；历史列表会显示为“回到第 1 次出牌前”等更直观的格式。 |
-| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.0 | 在出牌前显示所选手牌的参考分数，并按游戏语言显示英文、简体中文或繁体中文 UI；选中的牌存在背面牌时显示未知值；常规 SMODS 概率判定在预览中按“不触发”处理，原版 Boss Blind 的随机弃牌/翻面等出牌前副作用不会真实作用到手牌。 |
+| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.1.0 | 在当前盲注内记录出牌/弃牌/使用持有消耗牌前的检查点，可回到最近一次或更早的操作前，并按游戏语言显示英文、简体中文或繁体中文 UI；历史列表会显示为“回到第 1 次出牌前”“回到第 1 次使用消耗牌前”等更直观的格式。 |
+| [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.1 | 在出牌前显示所选手牌的参考分数，并按游戏语言显示英文、简体中文或繁体中文 UI；选中的牌处于逻辑背面状态时显示未知值；常规 SMODS 概率判定在预览中按“不触发”处理，原版 Boss Blind 的随机弃牌/翻面等出牌前副作用不会真实作用到手牌。 |
 
 ## 依赖
 
@@ -41,7 +41,7 @@
 不要多套一层文件夹，例如不要变成：
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-1.0.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack-1.1.0\BalatroStepBack\manifest.json
 ```
 
 ## 兼容性与安全说明

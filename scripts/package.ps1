@@ -5,7 +5,7 @@ $dist = Join-Path $root "dist"
 New-Item -ItemType Directory -Force -Path $dist | Out-Null
 
 $mods = @(
-    @{ Name = "BalatroStepBack"; Version = "1.0.0" },
+    @{ Name = "BalatroStepBack"; Version = "1.1.0" },
     @{ Name = "BalatroScorePreview"; Version = "1.2.1" }
 )
 

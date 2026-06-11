@@ -41,6 +41,8 @@ local stepback_text = {
         play_restore_suffix = "",
         discard_restore_prefix = "Go back before Discard #",
         discard_restore_suffix = "",
+        consumeable_restore_prefix = "Go back before Consumable #",
+        consumeable_restore_suffix = "",
         back = "Back"
     },
     zh_cn = {
@@ -53,6 +55,8 @@ local stepback_text = {
         play_restore_suffix = " 次出牌前",
         discard_restore_prefix = "回到第 ",
         discard_restore_suffix = " 次弃牌前",
+        consumeable_restore_prefix = "回到第 ",
+        consumeable_restore_suffix = " 次使用消耗牌前",
         back = "返回"
     },
     zh_tw = {
@@ -65,6 +69,8 @@ local stepback_text = {
         play_restore_suffix = " 次出牌前",
         discard_restore_prefix = "回到第 ",
         discard_restore_suffix = " 次棄牌前",
+        consumeable_restore_prefix = "回到第 ",
+        consumeable_restore_suffix = " 次使用消耗牌前",
         back = "返回"
     }
 }
@@ -143,10 +149,22 @@ local function build_save_table()
     })
 end
 
-local function can_capture(kind, hook)
+local function is_held_consumeable(card)
+    return card
+        and G
+        and G.consumeables
+        and card.area == G.consumeables
+        and card.ability
+        and card.ability.consumeable
+end
+
+local function can_capture(kind, hook, card)
     if StepBack.restoring then return false end
     if not G or not G.GAME or not G.hand or not G.hand.highlighted then return false end
     if G.STATE ~= G.STATES.SELECTING_HAND then return false end
+    if kind == "consumeable" then
+        return is_held_consumeable(card)
+    end
     if #G.hand.highlighted <= 0 then return false end
     if kind == "play" then
         if G.play and G.play.cards and G.play.cards[1] then return false end
@@ -166,12 +184,22 @@ local function action_number(kind)
     if kind == "play" then
         return (round.hands_played or 0) + 1
     end
+    if kind == "consumeable" then
+        local count = 0
+        for _, entry in ipairs(StepBack.history or {}) do
+            if entry.kind == "consumeable" then count = count + 1 end
+        end
+        return count + 1
+    end
     return (round.discards_used or 0) + 1
 end
 
 local function restore_label(kind, number)
     if kind == "play" then
         return loc("play_restore_prefix") .. tostring(number or "?") .. loc("play_restore_suffix")
+    end
+    if kind == "consumeable" then
+        return loc("consumeable_restore_prefix") .. tostring(number or "?") .. loc("consumeable_restore_suffix")
     end
     return loc("discard_restore_prefix") .. tostring(number or "?") .. loc("discard_restore_suffix")
 end
@@ -187,8 +215,8 @@ local function entry_restore_label(entry)
     return entry and entry.label or "?"
 end
 
-local function capture(kind, hook)
-    if not can_capture(kind, hook) then return end
+local function capture(kind, hook, card)
+    if not can_capture(kind, hook, card) then return end
     if not ensure_current_blind_history() then return end
 
     local save_table = build_save_table()
@@ -330,6 +358,13 @@ local original_discard_cards_from_highlighted = G.FUNCS.discard_cards_from_highl
 G.FUNCS.discard_cards_from_highlighted = function(e, hook)
     capture("discard", hook)
     return original_discard_cards_from_highlighted(e, hook)
+end
+
+local original_use_card = G.FUNCS.use_card
+G.FUNCS.use_card = function(e, mute, nosave)
+    local card = e and e.config and e.config.ref_table or nil
+    capture("consumeable", nil, card)
+    return original_use_card(e, mute, nosave)
 end
 
 local original_check_for_unlock = check_for_unlock
