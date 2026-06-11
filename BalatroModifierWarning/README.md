@@ -4,9 +4,9 @@ Author: ZhiSunian
 
 Chinese name: 覆盖提醒
 
-Version: 1.1.1
+Version: 1.1.2
 
-Shows a clear replacement warning badge on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot. The badge shows `REPLACE!` and the old-to-new modifier relationship, such as `Gold → Glass`.
+Shows a clear language-aware replacement warning badge on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot. The badge shows `REPLACE` and the old-to-new modifier relationship, such as `Gold → Glass`.
 
 ## What It Warns About
 
@@ -34,6 +34,12 @@ This mod uses a Steamodded draw step and only reads current card state. It shoul
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, game art, audio, save files, or other third-party assets.
 
 ## Changelog
+
+### 1.1.2
+
+- Reworked the badge into a single dark panel with a left warning accent, avoiding the previous red/black split that broke Chinese layout.
+- Vertically centers title and modifier text using measured text height instead of fixed visual guesses.
+- Uses separate sizing rules for Chinese/Traditional Chinese and English text.
 
 ### 1.1.1
 

@@ -17,13 +17,13 @@ local vanilla_seal_consumables = {
 
 local texts = {
     en = {
-        replace = "REPLACE!"
+        replace = "REPLACE"
     },
     zh_cn = {
-        replace = "覆盖!"
+        replace = "覆盖提醒"
     },
     zh_tw = {
-        replace = "覆蓋!"
+        replace = "覆蓋提醒"
     }
 }
 
@@ -333,6 +333,15 @@ local function text_width(text, font, scale)
     return tostring(text):len() * 0.08 * scale
 end
 
+local function text_height(text, font, scale)
+    local _, sy = font_scales(font, scale)
+    local drawable = cached_text(text, font)
+    if drawable and drawable.getHeight then return drawable:getHeight() * sy end
+    local font_obj = font and font.FONT or nil
+    if font_obj and font_obj.getHeight then return font_obj:getHeight() * sy end
+    return 0.20 * scale
+end
+
 local function draw_text(text, x, y, max_w, scale, colour, align)
     local font = draw_font()
     local drawable = cached_text(text, font)
@@ -355,6 +364,12 @@ local function draw_text(text, x, y, max_w, scale, colour, align)
     love.graphics.draw(drawable, draw_x + 0.018, y + 0.016, 0, sx, sy)
     love.graphics.setColor(colour[1], colour[2], colour[3], colour[4] or 1)
     love.graphics.draw(drawable, draw_x, y, 0, sx, sy)
+end
+
+local function draw_text_center_y(text, x, center_y, max_w, scale, colour, align)
+    local font = draw_font()
+    local height = text_height(text, font, scale)
+    draw_text(text, x, center_y - height / 2, max_w, scale, colour, align)
 end
 
 local function parallax_offset(card)
@@ -418,19 +433,19 @@ local function draw_warning_badge(card, warning)
     local new_name = warning.new_name or ""
     local has_relation = old_name ~= "" and new_name ~= ""
     local chinese = language_group() ~= "en"
-    local header_scale = chinese and 0.43 or 0.35
-    local relation_scale = chinese and 0.32 or 0.27
-    local arrow_w = 0.30
+    local header_scale = chinese and 0.34 or 0.34
+    local relation_scale = chinese and 0.29 or 0.27
+    local arrow_w = chinese and 0.36 or 0.32
     local relation_w = 0
     if has_relation then
         relation_w = text_width(old_name, font, relation_scale)
             + text_width(new_name, font, relation_scale)
             + arrow_w
-            + 0.26
+            + 0.34
     end
     local header_w = text_width(header, font, header_scale)
-    local badge_w = math.max(2.20, math.min(3.65, math.max(header_w + 0.74, relation_w + 0.34)))
-    local badge_h = has_relation and 0.80 or 0.48
+    local badge_w = math.max(chinese and 2.85 or 2.35, math.min(chinese and 4.25 or 3.70, math.max(header_w + 0.94, relation_w + 0.54)))
+    local badge_h = has_relation and (chinese and 0.90 or 0.82) or 0.54
     local px, py = parallax_offset(card)
     local min_x, max_x, room_h = warning_bounds(badge_w)
     local center_x = (vt.x or 0) + (vt.w or 0) / 2 + px
@@ -454,56 +469,62 @@ local function draw_warning_badge(card, warning)
     local pulse = 0.88 + 0.10 * math.sin((G.TIMERS and G.TIMERS.REAL or 0) * 7.5)
     local x = -badge_w / 2
     local y = badge_above and -badge_h or 0
-    local radius = 0.085
+    local radius = 0.09
 
-    love.graphics.setColor(0, 0, 0, 0.48)
-    love.graphics.rectangle("fill", x + 0.035, y + 0.045, badge_w, badge_h, radius)
+    love.graphics.setColor(0, 0, 0, 0.50)
+    love.graphics.rectangle("fill", x + 0.04, y + 0.05, badge_w, badge_h, radius)
 
-    love.graphics.setColor(0.92, 0.12, 0.03, 0.96 * pulse)
+    love.graphics.setColor(0.12, 0.045, 0.025, 0.96)
     love.graphics.rectangle("fill", x, y, badge_w, badge_h, radius)
+    love.graphics.setColor(0.80, 0.12, 0.03, 0.95 * pulse)
+    love.graphics.rectangle("fill", x, y, 0.16, badge_h, radius)
+
+    local inner_x = x + 0.20
+    local inner_w = badge_w - 0.25
     if has_relation then
-        love.graphics.setColor(0.23, 0.06, 0.03, 0.92)
-        love.graphics.rectangle("fill", x + 0.055, y + 0.43, badge_w - 0.11, 0.30, 0.055)
+        love.graphics.setColor(0.06, 0.025, 0.015, 0.76)
+        love.graphics.rectangle("fill", inner_x, y + badge_h * 0.49, inner_w, badge_h * 0.40, 0.055)
     end
 
-    love.graphics.setLineWidth(0.016)
-    love.graphics.setColor(1.00, 0.68, 0.07, 0.95)
+    love.graphics.setLineWidth(0.018)
+    love.graphics.setColor(1.00, 0.62, 0.08, 0.96)
     love.graphics.rectangle("line", x, y, badge_w, badge_h, radius)
 
-    local icon_cx = x + 0.26
-    local icon_cy = y + 0.235
+    local header_center_y = y + badge_h * 0.28
+    local relation_center_y = y + badge_h * 0.70
+    local icon_cx = x + 0.37
+    local icon_cy = header_center_y
     love.graphics.setColor(1.00, 0.82, 0.06, 0.96)
     love.graphics.polygon(
         "fill",
-        icon_cx, icon_cy - 0.145,
-        icon_cx - 0.145, icon_cy + 0.125,
-        icon_cx + 0.145, icon_cy + 0.125
+        icon_cx, icon_cy - 0.13,
+        icon_cx - 0.13, icon_cy + 0.115,
+        icon_cx + 0.13, icon_cy + 0.115
     )
     love.graphics.setColor(0.30, 0.04, 0.00, 0.95)
     love.graphics.setLineWidth(0.022)
-    love.graphics.line(icon_cx, icon_cy - 0.055, icon_cx, icon_cy + 0.045)
-    love.graphics.rectangle("fill", icon_cx - 0.012, icon_cy + 0.077, 0.024, 0.024)
+    love.graphics.line(icon_cx, icon_cy - 0.050, icon_cx, icon_cy + 0.038)
+    love.graphics.rectangle("fill", icon_cx - 0.011, icon_cy + 0.066, 0.022, 0.022)
 
-    draw_text(header, x + 0.50, y + 0.085, badge_w - 0.60, header_scale, {1, 1, 1, 1}, "left")
+    draw_text_center_y(header, x + 0.58, header_center_y, badge_w - 0.70, header_scale, {1, 1, 1, 1}, "left")
     if has_relation then
-        local relation_y = y + 0.462
         local old_w = text_width(old_name, font, relation_scale)
         local new_w = text_width(new_name, font, relation_scale)
-        local max_text_w = badge_w - 0.50 - arrow_w
+        local max_text_w = badge_w - 0.70 - arrow_w
         if old_w + new_w > max_text_w and old_w + new_w > 0 then
             relation_scale = relation_scale * math.max(0.72, max_text_w / (old_w + new_w))
             old_w = text_width(old_name, font, relation_scale)
             new_w = text_width(new_name, font, relation_scale)
         end
 
-        local total_w = old_w + new_w + arrow_w + 0.18
+        local total_w = old_w + new_w + arrow_w + 0.24
         local old_right = -total_w / 2 + old_w
-        local arrow_cx = old_right + 0.09 + arrow_w / 2
-        local new_left = arrow_cx + arrow_w / 2 + 0.09
+        local arrow_cx = old_right + 0.12 + arrow_w / 2
+        local new_left = arrow_cx + arrow_w / 2 + 0.12
 
-        draw_text(old_name, old_right, relation_y, old_w + 0.02, relation_scale, {1, 0.93, 0.66, 1}, "right")
-        draw_relation_arrow(arrow_cx, relation_y + 0.125, arrow_w, {1, 0.82, 0.12, 1})
-        draw_text(new_name, new_left, relation_y, new_w + 0.02, relation_scale, {1, 0.93, 0.66, 1}, "left")
+        draw_text_center_y(old_name, old_right, relation_center_y, old_w + 0.02, relation_scale, {1, 0.93, 0.66, 1}, "right")
+        draw_relation_arrow(arrow_cx, relation_center_y, arrow_w, {1, 0.82, 0.12, 1})
+        draw_text_center_y(new_name, new_left, relation_center_y, new_w + 0.02, relation_scale, {1, 0.93, 0.66, 1}, "left")
     end
 
     love.graphics.setColor(0.92, 0.12, 0.03, 0.95)
