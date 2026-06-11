@@ -157,13 +157,8 @@ local function card_is_hidden(card)
     return false
 end
 
-local function hand_has_hidden_cards()
-    if not G or not G.hand then return false end
-
-    for _, card in ipairs(G.hand.cards or {}) do
-        if card_is_hidden(card) then return true end
-    end
-    for _, card in ipairs(G.hand.highlighted or {}) do
+local function selected_has_hidden_cards(selected)
+    for _, card in ipairs(selected or {}) do
         if card_is_hidden(card) then return true end
     end
 
@@ -188,12 +183,6 @@ local function selection_signature()
         parts[#parts + 1] = tostring(card.config and card.config.center_key or "")
         parts[#parts + 1] = tostring(card.seal or "")
         parts[#parts + 1] = tostring(card.edition and (card.edition.key or card.edition.type) or "")
-    end
-
-    parts[#parts + 1] = "hand_visibility"
-    for i, card in ipairs(G.hand.cards or {}) do
-        parts[#parts + 1] = tostring(i)
-        parts[#parts + 1] = tostring(card.unique_val or "")
         parts[#parts + 1] = tostring(card.facing or "")
         parts[#parts + 1] = tostring(card.sprite_facing or "")
         parts[#parts + 1] = tostring(card.flipping or "")
@@ -970,7 +959,7 @@ local function calculate_preview()
     if not SMODS or not SMODS.Scoring_Parameters then return nil end
 
     local selected = sorted_selected_cards()
-    if hand_has_hidden_cards() then
+    if selected_has_hidden_cards(selected) then
         return { mode = "hidden" }
     end
 
