@@ -5,7 +5,7 @@
   "author": ["ZhiSunian"],
   "description": "Shows a localized sandboxed no-probability-trigger reference score for the selected poker hand. Chinese name: 分数预览.",
   "prefix": "scorepreview",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main_file": "main.lua",
   "dependencies": ["Steamodded"],
   "badge_colour": "1565C0",

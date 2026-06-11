@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 分数预览
 
-Version: 1.2.0
+Version: 1.2.1
 
 Shows a sandboxed reference score before playing the selected hand.
 
@@ -60,10 +60,15 @@ This archive contains only original Lua mod code and metadata. It does not inclu
 
 ## Changelog
 
+### 1.2.1
+
+- Fixed a false unknown preview caused by treating internal render/animation fields as hidden-card state.
+- Tightened hidden-card detection to logical face-down state only.
+- Updated the public version to 1.2.1.
+
 ### 1.2.0
 
-- Changed hidden-card handling: only selected logically face-down cards show an unknown preview value.
-- Fixed a false unknown preview caused by treating internal render/animation fields as hidden-card state.
+- Changed hidden-card handling: only selected face-down or flipping cards show an unknown preview value.
 - Updated the public version to 1.2.0.
 
 ### 1.1.0
