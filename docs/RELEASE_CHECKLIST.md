@@ -37,9 +37,9 @@ Use this before publishing to GitHub Releases or Nexus Mods.
   - Test at least one normal Joker scoring case.
   - Test one probability case, such as Lucky Card, and confirm the preview uses the non-trigger reference value.
 - Test Balatro Modifier Warning / 覆盖提醒:
-  - Select an enhancement Tarot, then select a playing card that already has a different enhancement and confirm the orange warning frame appears.
-  - Select a vanilla seal Spectral card, then select a playing card that already has a different seal and confirm the orange warning frame appears.
-  - Select a base card or same-modifier target and confirm no warning frame appears.
+  - Select an enhancement Tarot, then select a playing card that already has a different enhancement and confirm the replacement badge appears with old-to-new modifier text.
+  - Select a vanilla seal Spectral card, then select a playing card that already has a different seal and confirm the replacement badge appears with old-to-new modifier text.
+  - Select a base card or same-modifier target and confirm no replacement badge appears.
 
 ## Nexus Page
 

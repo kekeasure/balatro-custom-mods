@@ -4,16 +4,16 @@ Author: ZhiSunian
 
 Chinese name: 覆盖提醒
 
-Version: 1.0.1
+Version: 1.1.0
 
-Shows a small orange warning frame on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot.
+Shows a clear replacement warning badge on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot. The badge shows `REPLACE!` and the old-to-new modifier relationship, such as `Gold > Glass`.
 
 ## What It Warns About
 
 - Enhancement replacement, such as using The Devil on an already Steel, Gold, Lucky, Glass, Wild, Bonus, Mult, or Stone card.
 - Seal replacement, such as using Talisman, Deja Vu, Trance, or Medium on a card that already has a different seal.
 
-The mod does not block the action and does not change game rules. It only adds a visual warning to the selected target card.
+The mod does not block the action and does not change game rules. It only adds a visual warning badge near the selected target card.
 
 ## What It Does Not Warn About
 
@@ -34,6 +34,12 @@ This mod uses a Steamodded draw step and only reads current card state. It shoul
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, game art, audio, save files, or other third-party assets.
 
 ## Changelog
+
+### 1.1.0
+
+- Replaced the subtle orange frame with a clearer red-orange replacement badge.
+- The warning now explicitly shows the overwrite relationship, such as `Gold > Glass` or `Red > Gold`.
+- The badge is drawn as a readable horizontal label near the target card instead of trying to outline the tilted card.
 
 ### 1.0.1
 
