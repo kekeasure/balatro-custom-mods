@@ -4,7 +4,7 @@ Author: ZhiSunian
 
 Chinese name: 覆盖提醒
 
-Version: 1.0.0
+Version: 1.0.1
 
 Shows a small orange warning frame on selected playing cards when the currently selected consumable would replace an existing modifier in the same slot.
 
@@ -34,6 +34,10 @@ This mod uses a Steamodded draw step and only reads current card state. It shoul
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, game art, audio, save files, or other third-party assets.
 
 ## Changelog
+
+### 1.0.1
+
+- Fixed the warning frame scale. The orange overlay now uses card-local draw units instead of screen-pixel units, so it stays attached to the selected card instead of covering the screen.
 
 ### 1.0.0
 

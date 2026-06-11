@@ -137,15 +137,14 @@ local function draw_warning_frame(card)
     local vt = card.VT or card.T
     if not vt then return end
 
-    local tile = G.TILESIZE
-    local width = (vt.w or card.T.w) * tile
-    local height = (vt.h or card.T.h) * tile
+    local width = vt.w or card.T.w
+    local height = vt.h or card.T.h
     local pulse = 0.78 + 0.16 * math.sin((G.TIMERS and G.TIMERS.REAL or 0) * 7)
-    local border_pad = 0.035 * tile
-    local corner = 0.24 * tile
+    local border_pad = 0.035
+    local corner = 0.24
 
     prep_draw(card, 1.035)
-    love.graphics.setLineWidth(math.max(2, 0.025 * tile))
+    love.graphics.setLineWidth(0.035)
     love.graphics.setColor(1, 0.47, 0.04, pulse)
     love.graphics.rectangle(
         "line",
@@ -153,19 +152,20 @@ local function draw_warning_frame(card)
         -border_pad,
         width + border_pad * 2,
         height + border_pad * 2,
-        0.10 * tile
+        0.10
     )
 
     love.graphics.setColor(1, 0.47, 0.04, 0.14)
-    love.graphics.rectangle("fill", 0, 0, width, height, 0.08 * tile)
+    love.graphics.rectangle("fill", 0, 0, width, height, 0.08)
 
     love.graphics.setColor(1, 0.36, 0.02, pulse)
     love.graphics.polygon("fill", width - corner, 0, width, 0, width, corner)
-    love.graphics.setLineWidth(math.max(1, 0.012 * tile))
+    love.graphics.setLineWidth(0.012)
     love.graphics.setColor(1, 1, 1, pulse)
     local x = width - corner * 0.32
     love.graphics.line(x, corner * 0.18, x, corner * 0.58)
-    love.graphics.rectangle("fill", x - 0.012 * tile, corner * 0.72, 0.024 * tile, 0.024 * tile)
+    love.graphics.rectangle("fill", x - 0.012, corner * 0.72, 0.024, 0.024)
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.pop()
 end
 
