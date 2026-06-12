@@ -1,0 +1,13 @@
+{
+  "id": "BalatroShopUndo",
+  "name": "Balatro Shop Undo",
+  "display_name": "Shop Undo / 商店回退",
+  "author": ["ZhiSunian"],
+  "description": "Adds a small localized undo button to the shop for accidental purchases, buy-and-use actions, sales, and voucher redemptions. Rerolls and booster openings are intentionally excluded to avoid free previews.",
+  "prefix": "shopundo",
+  "version": "1.0.0",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "2E7D32",
+  "badge_text_colour": "FFFFFF"
+}

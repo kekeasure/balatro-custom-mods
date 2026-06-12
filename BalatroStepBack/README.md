@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 对局回退
 
-Version: 1.1.0
+Version: 1.2.0
 
 ## What It Does
 
@@ -16,7 +16,10 @@ Balatro Step Back / 对局回退 adds checkpoints inside the current blind.
 - Simplified Chinese UI: `回退` returns to the latest play/discard checkpoint, and `记录` opens the checkpoint list.
 - Traditional Chinese UI: `回退` returns to the latest play/discard checkpoint, and `記錄` opens the checkpoint list.
 - History entries use clearer labels, such as `Go back before Play #1`, `Go back before Consumable #1`, `回到第 1 次出牌前`, and `回到第 1 次使用消耗牌前`.
-- History is limited to the current blind. Choosing an earlier checkpoint discards later checkpoint history.
+- The History menu is paginated and entries stay collapsed by default; open `Details` to view the exact cards for that checkpoint.
+- Played and discarded hand checkpoints show scaled real Balatro card previews in the History details panel. Played hand checkpoints also show the detected poker hand.
+- History is limited to the current run and blind. Choosing an earlier checkpoint discards later checkpoint history.
+- Current-blind checkpoint history is saved with the run, so returning to the main menu and continuing the same run keeps the available step-back points.
 - Using a held consumable during a blind now creates a checkpoint first, so stepping back can restore Tarot, Planet, and Spectral cards to the consumable area.
 
 ## Requirements
@@ -56,7 +59,7 @@ It has been tested locally with Lovely 0.9.0 and Steamodded 1.0.0 beta.
 
 Known limits:
 
-- History is limited to the current blind.
+- History is limited to the current run and blind.
 - Restoring a checkpoint briefly reloads the run state.
 - Mods that store unsaved external state may not restore perfectly.
 - If a crash happens, test again with only Lovely, Steamodded, and this mod enabled.
@@ -66,6 +69,19 @@ Known limits:
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.2.0
+
+- Replaced the text-only checkpoint record with scaled real Balatro card previews for play/discard checkpoint details.
+- Changed the History menu to paginated, collapsed entries with `Details` / `Hide` controls so long checkpoint lists stay within the screen.
+- Added a fallback compact card-badge renderer for unusual cards that cannot be reconstructed as a real preview card.
+- Played hand checkpoints now show the detected poker hand beside the checkpoint label.
+- Current-blind checkpoint history now persists when returning to the main menu and continuing the same run.
+
+### 1.1.1
+
+- Fixed checkpoint history carrying over after starting a new run from the pause menu.
+- Added run identity to the blind checkpoint key so a new run cannot reuse checkpoints from an older run with the same blind state.
 
 ### 1.1.0
 

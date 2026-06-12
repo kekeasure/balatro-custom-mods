@@ -7,6 +7,7 @@
 ## 文件
 
 - `BalatroStepBack/manifest.json` 中的版本号和作者正确。
+- `BalatroShopUndo/manifest.json` 中的版本号和作者正确。
 - `BalatroScorePreview/manifest.json` 中的版本号和作者正确。
 - `BalatroModifierWarning/manifest.json` 中的版本号和作者正确。
 - 每个模组文件夹只包含用户需要的文件：`manifest.json`、`main.lua`、`README.md`、`README.zh-CN.md`。
@@ -15,6 +16,7 @@
 ## 打包
 
 - `BalatroStepBack-<version>.zip` 解压后第一层有 `BalatroStepBack/manifest.json`。
+- `BalatroShopUndo-<version>.zip` 解压后第一层有 `BalatroShopUndo/manifest.json`。
 - `BalatroScorePreview-<version>.zip` 解压后第一层有 `BalatroScorePreview/manifest.json`。
 - `BalatroModifierWarning-<version>.zip` 解压后第一层有 `BalatroModifierWarning/manifest.json`。
 - 解压后不会多出额外嵌套文件夹。
@@ -28,8 +30,17 @@
   - 简体中文环境下确认按钮显示 `回退` 和 `记录`，历史列表显示类似 `回到第 1 次出牌前`。
   - 繁体中文环境下确认按钮显示 `回退` 和 `記錄`，历史列表显示类似 `回到第 1 次棄牌前`。
   - 出牌或弃牌一次。
+  - 打开检查点列表，确认列表分页、记录默认折叠、“详情/收起”只展开单条记录，并且出牌/弃牌检查点显示缩小后的真实牌面预览。
   - 恢复到最近检查点。
   - 打开检查点列表并恢复到更早的检查点。
+  - 回到主界面后继续同一局，确认当前盲注检查点列表仍然可用。
+  - 从暂停菜单开始新的一局，进入小盲注后确认旧检查点已经清空。
+- 测试 Balatro Shop Undo / 商店回退：
+  - 在商店中确认重掷按钮下方出现 `回退 / 商店` 按钮。
+  - 购买一张可见商店卡牌后回退，确认金钱、卡牌区域和商店内容恢复。
+  - 在商店中出售小丑牌或可出售消耗牌后回退，确认卡牌和金钱恢复。
+  - 兑换优惠券后回退，确认优惠券状态和金钱恢复。
+  - 确认 1.0.0 不回退商店重掷和打开补充包。
 - 测试 Balatro Score Preview / 分数预览：
   - 英文环境下选择手牌并确认出现 `Reference: ...`。
   - 简体中文环境下选择手牌并确认出现 `参考值：...`。
