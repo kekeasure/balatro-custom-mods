@@ -415,6 +415,82 @@ local function action_preview(kind)
     }
 end
 
+local poker_hand_names = {
+    en = {
+        ["Five of a Kind"] = "Five of a Kind",
+        Flush = "Flush",
+        ["Flush Five"] = "Flush Five",
+        ["Flush House"] = "Flush House",
+        ["Four of a Kind"] = "Four of a Kind",
+        ["Full House"] = "Full House",
+        ["High Card"] = "High Card",
+        Pair = "Pair",
+        ["Royal Flush"] = "Royal Flush",
+        Straight = "Straight",
+        ["Straight Flush"] = "Straight Flush",
+        ["Three of a Kind"] = "Three of a Kind",
+        ["Two Pair"] = "Two Pair"
+    },
+    zh_cn = {
+        ["Five of a Kind"] = "五条",
+        Flush = "同花",
+        ["Flush Five"] = "同花五条",
+        ["Flush House"] = "同花葫芦",
+        ["Four of a Kind"] = "四条",
+        ["Full House"] = "葫芦",
+        ["High Card"] = "高牌",
+        Pair = "对子",
+        ["Royal Flush"] = "皇家同花顺",
+        Straight = "顺子",
+        ["Straight Flush"] = "同花顺",
+        ["Three of a Kind"] = "三条",
+        ["Two Pair"] = "两对"
+    },
+    zh_tw = {
+        ["Five of a Kind"] = "五條",
+        Flush = "同花",
+        ["Flush Five"] = "同花五條",
+        ["Flush House"] = "同花葫蘆",
+        ["Four of a Kind"] = "四條",
+        ["Full House"] = "葫蘆",
+        ["High Card"] = "高牌",
+        Pair = "對子",
+        ["Royal Flush"] = "皇家同花順",
+        Straight = "順子",
+        ["Straight Flush"] = "同花順",
+        ["Three of a Kind"] = "三條",
+        ["Two Pair"] = "兩對"
+    }
+}
+
+local function localize_poker_hand_name(hand_key)
+    if not hand_key or hand_key == "" then return nil end
+
+    if type(localize) == "function" then
+        local ok, result = pcall(localize, hand_key, "poker_hands")
+        if ok and result and result ~= "ERROR" then
+            return result
+        end
+    end
+
+    local names = poker_hand_names[language_group()] or poker_hand_names.en
+    return names[hand_key]
+end
+
+local function entry_hand_label(entry)
+    if not entry or not entry.preview then return nil end
+    if entry.kind == "discard" then return loc("discard_preview") end
+
+    local preview = entry.preview
+    if preview.hand_key then
+        return localize_poker_hand_name(preview.hand_key) or tostring(preview.hand_key)
+    end
+    if preview.hand_name then
+        return localize_poker_hand_name(preview.hand_name) or tostring(preview.hand_name)
+    end
+    return nil
+end
+
 local rank_short = {
     Ace = "A",
     King = "K",
@@ -1381,6 +1457,7 @@ local function create_history_entry_row(index, entry, restore_func_name, detail_
     local details_scale = is_chinese_language() and 0.25 or 0.21
     local restore_scale = is_chinese_language() and 0.28 or 0.25
     local marker = has_card_preview and (expanded and "- " or "+ ") or ""
+    local hand_label = entry_hand_label(entry)
 
     local content = {
         { n = G.UIT.C, config = { align = "cl", minw = 4.25, maxw = 4.25 }, nodes = {
@@ -1388,9 +1465,9 @@ local function create_history_entry_row(index, entry, restore_func_name, detail_
         }}
     }
 
-    if preview and preview.hand_name then
+    if hand_label then
         content[#content + 1] = { n = G.UIT.C, config = { align = "cm", minw = 1.05, maxw = 1.05, padding = 0.02 }, nodes = {
-            { n = G.UIT.T, config = { text = tostring(preview.hand_name), scale = hand_scale, colour = G.C.UI.TEXT_LIGHT, shadow = true } }
+            { n = G.UIT.T, config = { text = hand_label, scale = hand_scale, colour = G.C.UI.TEXT_LIGHT, shadow = true } }
         }}
     else
         content[#content + 1] = { n = G.UIT.C, config = { align = "cm", minw = 1.05, maxw = 1.05, padding = 0.02 }, nodes = {} }

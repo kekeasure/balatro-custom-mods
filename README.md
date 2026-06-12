@@ -12,7 +12,7 @@ No Balatro, Lovely, Steamodded, game files, game art, audio, save files, or othe
 
 | Mod | Version | Purpose |
 | --- | --- | --- |
-| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.2.0 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard/held-consumable checkpoint. The history menu is paginated with expandable details and scaled real card previews for play/discard checkpoints. |
+| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.2.1 | Adds localized in-blind checkpoints and lets you step back to the latest or an earlier play/discard/held-consumable checkpoint. The history menu is paginated with expandable details and scaled real card previews for play/discard checkpoints. |
 | [Balatro Shop Undo / 商店回退](./BalatroShopUndo) | 1.0.0 | Adds a localized shop undo button for accidental purchases, buy-and-use actions, sales, and voucher redemptions. Rerolls and booster openings are intentionally excluded to avoid free previews. |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | Shows a localized pre-play reference score for the selected hand. Selected logically face-down cards show an unknown value. Standard SMODS probability checks are treated as not triggering, and disruptive vanilla Boss Blind pre-play effects are isolated from the live hand. |
 | [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.1.2 | Adds a clear language-aware replacement warning badge with old-to-new modifier text when a selected consumable would replace an existing playing-card enhancement or seal. |
@@ -47,7 +47,7 @@ The final layout should look like this:
 Do not place the mod inside an extra nested folder such as:
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-1.2.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack-1.2.1\BalatroStepBack\manifest.json
 ```
 
 ## Compatibility And Safety

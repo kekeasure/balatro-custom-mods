@@ -10,7 +10,7 @@
 
 | 模组 | 版本 | 用途 |
 | --- | --- | --- |
-| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.2.0 | 在当前盲注内记录出牌、弃牌、使用持有消耗牌前的检查点，可回到最近一次或更早的操作前；记录菜单采用分页和详情展开，并为出牌/弃牌检查点显示缩小后的真实牌面预览。 |
+| [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.2.1 | 在当前盲注内记录出牌、弃牌、使用持有消耗牌前的检查点，可回到最近一次或更早的操作前；记录菜单采用分页和详情展开，并为出牌/弃牌检查点显示缩小后的真实牌面预览。 |
 | [Balatro Shop Undo / 商店回退](./BalatroShopUndo) | 1.0.0 | 在商店界面添加本地化回退按钮，用于撤回误购买、购买并使用、出售和兑换优惠券；暂不回退重掷商店和打开补充包，避免免费预览。 |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | 在出牌前显示所选手牌的参考分数。选中的牌处于逻辑背面状态时显示未知值；常规 SMODS 概率判定在预览中按“不触发”处理，原版 Boss Blind 的出牌前副作用不会真实作用到手牌。 |
 | [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.1.2 | 当前选中的消耗牌会替换目标扑克牌已有的增强牌或蜡封时，在目标牌上显示按语言适配的覆盖警告标签，并写出“旧效果 → 新效果”。 |
@@ -45,7 +45,7 @@
 不要多套一层文件夹，例如不要变成：
 
 ```text
-%AppData%\Balatro\Mods\BalatroStepBack-1.2.0\BalatroStepBack\manifest.json
+%AppData%\Balatro\Mods\BalatroStepBack-1.2.1\BalatroStepBack\manifest.json
 ```
 
 ## 兼容性与安全说明

@@ -13,7 +13,7 @@
 
 ## 文件名
 
-- Balatro Step Back / 对局回退: `BalatroStepBack-1.2.0.zip`
+- Balatro Step Back / 对局回退: `BalatroStepBack-1.2.1.zip`
 - Balatro Shop Undo / 商店回退: `BalatroShopUndo-1.0.0.zip`
 - Balatro Score Preview / 分数预览: `BalatroScorePreview-1.2.2.zip`
 - Balatro Modifier Warning / 覆盖提醒: `BalatroModifierWarning-1.1.2.zip`

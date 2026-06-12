@@ -17,7 +17,7 @@ Suggested category: Gameplay or User Interface
 
 Suggested tags: Quality of Life, Gameplay, User Interface
 
-Upload file: `BalatroStepBack-1.2.0.zip`
+Upload file: `BalatroStepBack-1.2.1.zip`
 
 ### Short Description
 
@@ -52,7 +52,7 @@ Installation
 
 1. Install Lovely Injector.
 2. Install Steamodded / SMODS.
-3. Download BalatroStepBack-1.2.0.zip.
+3. Download BalatroStepBack-1.2.1.zip.
 4. Extract the zip.
 5. Move the `BalatroStepBack` folder into:
 
@@ -117,7 +117,7 @@ Balatro Step Back / 对局回退 会在当前盲注内添加基于检查点的�
 
 1. 安装 Lovely Injector。
 2. 安装 Steamodded / SMODS。
-3. 下载 BalatroStepBack-1.2.0.zip。
+3. 下载 BalatroStepBack-1.2.1.zip。
 4. 解压压缩包。
 5. 将 BalatroStepBack 文件夹放入：
 

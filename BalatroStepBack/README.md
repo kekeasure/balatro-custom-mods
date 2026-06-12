@@ -6,7 +6,7 @@ Author: ZhiSunian
 
 Chinese name: 对局回退
 
-Version: 1.2.0
+Version: 1.2.1
 
 ## What It Does
 
@@ -69,6 +69,11 @@ Known limits:
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.2.1
+
+- Fixed mixed-language poker hand labels in the History list by resolving played-hand names from the current game language at display time.
+- Added fallback English, Simplified Chinese, and Traditional Chinese poker hand names for vanilla hand types if Balatro localization lookup is unavailable.
 
 ### 1.2.0
 

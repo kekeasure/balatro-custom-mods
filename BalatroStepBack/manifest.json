@@ -5,7 +5,7 @@
   "author": ["ZhiSunian"],
   "description": "Adds localized in-blind checkpoints before each played or discarded hand, then lets you step back to the latest or any earlier checkpoint in the current blind. Chinese name: 对局回退.",
   "prefix": "stepback",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main_file": "main.lua",
   "dependencies": ["Steamodded"],
   "badge_colour": "2E7D32",
