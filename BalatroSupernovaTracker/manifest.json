@@ -1,0 +1,13 @@
+{
+  "id": "BalatroSupernovaTracker",
+  "name": "Balatro Supernova Tracker",
+  "display_name": "Supernova Tracker / 超新星追踪",
+  "author": ["ZhiSunian"],
+  "description": "Adds a compact localized hand-count tracker to Supernova's Joker tooltip so you can see how much Mult each poker hand currently gives. Chinese name: 超新星追踪.",
+  "prefix": "supernovatracker",
+  "version": "1.0.2",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "B34DDB",
+  "badge_text_colour": "FFFFFF"
+}

@@ -14,7 +14,8 @@
 ## 文件名
 
 - Balatro Step Back / 对局回退: `BalatroStepBack-1.2.1.zip`
-- Balatro Shop Undo / 商店回退: `BalatroShopUndo-1.0.0.zip`
+- Balatro Shop Undo / 商店回退: `BalatroShopUndo-1.0.1.zip`
+- Balatro Run History / 历史战绩: `BalatroRunArchive-0.1.2.zip`
 - Balatro Score Preview / 分数预览: `BalatroScorePreview-1.2.2.zip`
 - Balatro Modifier Warning / 覆盖提醒: `BalatroModifierWarning-1.1.2.zip`
 
@@ -22,5 +23,6 @@
 
 - Balatro Step Back / 对局回退: `Gameplay` 或 `User Interface`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。
 - Balatro Shop Undo / 商店回退: `User Interface` 或 `Gameplay`；标签建议 `Quality of Life`、`User Interface`、`Gameplay`。
+- Balatro Run History / 历史战绩: `User Interface` 或 `Utilities`；标签建议 `Quality of Life`、`User Interface`、`Run History`。
 - Balatro Score Preview / 分数预览: `User Interface` 或 `Gameplay`；标签建议 `Quality of Life`、`Gameplay`、`User Interface`。
 - Balatro Modifier Warning / 覆盖提醒: `User Interface` 或 `Gameplay`；标签建议 `Quality of Life`、`User Interface`、`Gameplay`。

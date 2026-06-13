@@ -6,7 +6,9 @@ New-Item -ItemType Directory -Force -Path $dist | Out-Null
 
 $mods = @(
     @{ Name = "BalatroStepBack"; Version = "1.2.1" },
-    @{ Name = "BalatroShopUndo"; Version = "1.0.0" },
+    @{ Name = "BalatroShopUndo"; Version = "1.0.1" },
+    @{ Name = "BalatroRunArchive"; Version = "0.1.2" },
+    @{ Name = "BalatroSupernovaTracker"; Version = "1.0.2" },
     @{ Name = "BalatroScorePreview"; Version = "1.2.2" },
     @{ Name = "BalatroModifierWarning"; Version = "1.1.2" }
 )

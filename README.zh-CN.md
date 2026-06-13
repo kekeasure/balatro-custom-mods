@@ -11,7 +11,9 @@
 | 模组 | 版本 | 用途 |
 | --- | --- | --- |
 | [Balatro Step Back / 对局回退](./BalatroStepBack) | 1.2.1 | 在当前盲注内记录出牌、弃牌、使用持有消耗牌前的检查点，可回到最近一次或更早的操作前；记录菜单采用分页和详情展开，并为出牌/弃牌检查点显示缩小后的真实牌面预览。 |
-| [Balatro Shop Undo / 商店回退](./BalatroShopUndo) | 1.0.0 | 在商店界面添加本地化回退按钮，用于撤回误购买、购买并使用、出售和兑换优惠券；暂不回退重掷商店和打开补充包，避免免费预览。 |
+| [Balatro Shop Undo / 商店回退](./BalatroShopUndo) | 1.0.1 | 在商店界面添加本地化回退按钮，用于撤回误购买、购买并使用、出售和兑换优惠券；不会回退重掷商店和补充包开包结果，但开包后仍会尽量保留之前安全的普通购买/出售回退点。 |
+| [Balatro Run History / 历史战绩](./BalatroRunArchive) | 0.1.2 | 在选项菜单添加历史战绩，记录每局的卡组、难度、Seed、结果和最终状态，并可展开查看最终小丑牌、牌组、优惠券的缩小牌面。 |
+| [Balatro Supernova Tracker / 超新星追踪](./BalatroSupernovaTracker) | 1.0.2 | 在超新星小丑牌说明里追加一个紧凑的本地化追踪面板，显示各牌型当前能提供多少倍率，包括隐藏牌型。 |
 | [Balatro Score Preview / 分数预览](./BalatroScorePreview) | 1.2.2 | 在出牌前显示所选手牌的参考分数。选中的牌处于逻辑背面状态时显示未知值；常规 SMODS 概率判定在预览中按“不触发”处理，原版 Boss Blind 的出牌前副作用不会真实作用到手牌。 |
 | [Balatro Modifier Warning / 覆盖提醒](./BalatroModifierWarning) | 1.1.2 | 当前选中的消耗牌会替换目标扑克牌已有的增强牌或蜡封时，在目标牌上显示按语言适配的覆盖警告标签，并写出“旧效果 → 新效果”。 |
 
@@ -38,6 +40,8 @@
 ```text
 %AppData%\Balatro\Mods\BalatroStepBack\manifest.json
 %AppData%\Balatro\Mods\BalatroShopUndo\manifest.json
+%AppData%\Balatro\Mods\BalatroRunArchive\manifest.json
+%AppData%\Balatro\Mods\BalatroSupernovaTracker\manifest.json
 %AppData%\Balatro\Mods\BalatroScorePreview\manifest.json
 %AppData%\Balatro\Mods\BalatroModifierWarning\manifest.json
 ```
@@ -55,6 +59,7 @@
 - 带有 UI 文本的模组会根据游戏语言显示英文、简体中文或繁体中文 UI。
 - 这些模组会在运行时挂接 Lua 函数或绘制步骤，因此仍可能与改写同一 UI、计分或卡牌绘制函数的其他模组冲突。
 - Balatro Step Back / 对局回退、Balatro Shop Undo / 商店回退使用 Balatro 的对局保存/读取数据结构来恢复检查点。保存额外外部状态的模组可能无法被完全回退。
+- Balatro Run History / 历史战绩会把对局记录写入 Balatro 当前配置档案。记录数量会被限制，避免配置档案无限变大。
 - Balatro Score Preview / 分数预览使用沙盒试算。它应能兼容原版和大多数按 SMODS 标准计分流程编写的模组，但如果其他模组有外部副作用、自定义随机逻辑、自定义 Boss Blind 出牌前事件或非标准计分全局状态，预览值仍可能与最终值不同。
 
 反馈问题前，建议先只启用 Lovely、Steamodded 和出问题的单个模组进行复测。
@@ -73,6 +78,22 @@ BalatroStepBack/
 
 ```text
 BalatroShopUndo/
+  manifest.json
+  main.lua
+  README.md
+  README.zh-CN.md
+```
+
+```text
+BalatroRunArchive/
+  manifest.json
+  main.lua
+  README.md
+  README.zh-CN.md
+```
+
+```text
+BalatroSupernovaTracker/
   manifest.json
   main.lua
   README.md

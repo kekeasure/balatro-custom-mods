@@ -4,7 +4,7 @@
 
 Author: ZhiSunian
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## What It Does
 
@@ -16,9 +16,11 @@ Balatro Shop Undo adds a small undo button to the shop screen. It is meant for c
 - Creates a checkpoint before selling a card while in the shop.
 - Creates a checkpoint before redeeming a voucher.
 - Pressing the button restores the latest shop checkpoint.
+- Booster pack openings and pack results are not rewound. After opening a booster, earlier safe buy/sell checkpoints can still be undone while the opened pack stays opened.
+- Unsafe cross-pack checkpoints, such as buy-and-use actions or voucher redemptions, may be dropped because their effects cannot be separated cleanly from later pack results.
 - English, Simplified Chinese, and Traditional Chinese UI text are included.
 
-Intentionally not included in 1.0.0:
+Intentionally not included:
 
 - Shop reroll undo, because it would let players preview rerolls for free.
 - Booster pack opening undo, because it would let players preview pack contents for free.
@@ -69,6 +71,10 @@ Known limits:
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.0.1
+
+- Opening a booster pack now preserves safe earlier buy/sell checkpoints, while booster purchases and pack results stay unchanged.
 
 ### 1.0.0
 

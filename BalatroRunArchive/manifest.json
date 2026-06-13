@@ -1,0 +1,13 @@
+{
+  "id": "BalatroRunArchive",
+  "name": "Balatro Run History",
+  "display_name": "Run History / 历史战绩",
+  "author": ["ZhiSunian"],
+  "description": "Records Balatro run history with deck, stake, seed, result, final state, suit-grouped deck previews, hoverable final card previews, filters, sorting, stats, and clear-all record management. Chinese name: 历史战绩.",
+  "prefix": "runarchive",
+  "version": "0.1.2",
+  "main_file": "main.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "6A1B9A",
+  "badge_text_colour": "FFFFFF"
+}

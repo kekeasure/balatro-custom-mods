@@ -8,6 +8,8 @@ Use this before publishing to GitHub Releases or Nexus Mods.
 
 - `BalatroStepBack/manifest.json` has the correct version and author.
 - `BalatroShopUndo/manifest.json` has the correct version and author.
+- `BalatroRunArchive/manifest.json` has the correct version and author.
+- `BalatroSupernovaTracker/manifest.json` has the correct version and author.
 - `BalatroScorePreview/manifest.json` has the correct version and author.
 - `BalatroModifierWarning/manifest.json` has the correct version and author.
 - Each mod folder contains only files needed by users: `manifest.json`, `main.lua`, `README.md`, `README.zh-CN.md`.
@@ -17,6 +19,8 @@ Use this before publishing to GitHub Releases or Nexus Mods.
 
 - `BalatroStepBack-<version>.zip` contains `BalatroStepBack/manifest.json` at the first folder level.
 - `BalatroShopUndo-<version>.zip` contains `BalatroShopUndo/manifest.json` at the first folder level.
+- `BalatroRunArchive-<version>.zip` contains `BalatroRunArchive/manifest.json` at the first folder level.
+- `BalatroSupernovaTracker-<version>.zip` contains `BalatroSupernovaTracker/manifest.json` at the first folder level.
 - `BalatroScorePreview-<version>.zip` contains `BalatroScorePreview/manifest.json` at the first folder level.
 - `BalatroModifierWarning-<version>.zip` contains `BalatroModifierWarning/manifest.json` at the first folder level.
 - Extracting the zip does not create an extra nested folder.
@@ -40,7 +44,15 @@ Use this before publishing to GitHub Releases or Nexus Mods.
   - Buy a visible shop card, then undo and confirm money, card areas, and shop contents return.
   - Sell a Joker or sellable consumable in the shop, then undo and confirm the card and money return.
   - Redeem a voucher, then undo and confirm voucher state and money return.
-  - Confirm shop reroll and booster opening are not undoable in 1.0.0.
+  - Confirm shop reroll and booster opening are not undoable.
+  - Confirm opening a booster keeps safe earlier buy/sell undo points, while the opened pack and pack results are not rewound.
+- Test Balatro Run History / 历史战绩:
+  - Confirm the Options menu shows `Run History`, `历史战绩`, or `歷史戰績` based on the game language.
+  - Start a new run, buy or redeem at least one visible card if possible, then finish or lose the run.
+  - Open the archive list and confirm the run appears with deck, stake, seed, result, ante, and best-hand score.
+  - Open Details and confirm Overview and Final State tabs contain reasonable data.
+  - In Final State, expand Jokers, Deck cards, and Vouchers and confirm small card previews appear when data is available.
+  - Confirm old runs remain available after restarting Balatro.
 - Test Balatro Score Preview / 分数预览:
   - In English, select cards and check `Reference: ...` appears.
   - In Simplified Chinese, select cards and check `参考值：...` appears.

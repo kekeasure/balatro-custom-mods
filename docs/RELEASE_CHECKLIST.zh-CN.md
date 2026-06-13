@@ -8,6 +8,8 @@
 
 - `BalatroStepBack/manifest.json` 中的版本号和作者正确。
 - `BalatroShopUndo/manifest.json` 中的版本号和作者正确。
+- `BalatroRunArchive/manifest.json` 中的版本号和作者正确。
+- `BalatroSupernovaTracker/manifest.json` 中的版本号和作者正确。
 - `BalatroScorePreview/manifest.json` 中的版本号和作者正确。
 - `BalatroModifierWarning/manifest.json` 中的版本号和作者正确。
 - 每个模组文件夹只包含用户需要的文件：`manifest.json`、`main.lua`、`README.md`、`README.zh-CN.md`。
@@ -17,6 +19,8 @@
 
 - `BalatroStepBack-<version>.zip` 解压后第一层有 `BalatroStepBack/manifest.json`。
 - `BalatroShopUndo-<version>.zip` 解压后第一层有 `BalatroShopUndo/manifest.json`。
+- `BalatroRunArchive-<version>.zip` 解压后第一层有 `BalatroRunArchive/manifest.json`。
+- `BalatroSupernovaTracker-<version>.zip` 解压后第一层有 `BalatroSupernovaTracker/manifest.json`。
 - `BalatroScorePreview-<version>.zip` 解压后第一层有 `BalatroScorePreview/manifest.json`。
 - `BalatroModifierWarning-<version>.zip` 解压后第一层有 `BalatroModifierWarning/manifest.json`。
 - 解压后不会多出额外嵌套文件夹。
@@ -40,7 +44,15 @@
   - 购买一张可见商店卡牌后回退，确认金钱、卡牌区域和商店内容恢复。
   - 在商店中出售小丑牌或可出售消耗牌后回退，确认卡牌和金钱恢复。
   - 兑换优惠券后回退，确认优惠券状态和金钱恢复。
-  - 确认 1.0.0 不回退商店重掷和打开补充包。
+  - 确认不会回退商店重掷和打开补充包本身。
+  - 确认打开补充包后仍保留安全的普通购买/出售回退点，但已打开的补充包和开包结果不会被回退。
+- 测试 Balatro Run History / 历史战绩：
+  - 确认选项菜单根据游戏语言显示 `Run History`、`历史战绩` 或 `歷史戰績`。
+  - 开始一局新对局，如条件允许购买或兑换至少一张可见卡牌，然后胜利或失败结束这局。
+  - 打开档案列表，确认这局记录显示卡组、难度、Seed、结果、底注和最高单手得分。
+  - 打开详情，确认“概览 / 最终状态”两个页面都有合理数据。
+  - 在“最终状态”里展开小丑牌、牌组和优惠券，确认有数据时会显示缩小牌面。
+  - 重启 Balatro 后确认旧记录仍然可查看。
 - 测试 Balatro Score Preview / 分数预览：
   - 英文环境下选择手牌并确认出现 `Reference: ...`。
   - 简体中文环境下选择手牌并确认出现 `参考值：...`。
