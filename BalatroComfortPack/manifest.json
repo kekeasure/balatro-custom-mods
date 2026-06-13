@@ -1,0 +1,14 @@
+{
+  "id": "BalatroComfortPack",
+  "name": "Balatro Comfort Pack",
+  "display_name": "Balatro Comfort Pack / 小丑牌舒适包",
+  "author": ["ZhiSunian"],
+  "description": "A combined Balatro comfort pack with six optional helper modules: Modifier Warning, Run History, Supernova Tracker, Score Preview, Shop Undo, and Step Back. Chinese name: 小丑牌舒适包.",
+  "prefix": "comfortpack",
+  "version": "1.0.0",
+  "main_file": "main.lua",
+  "config_file": "config.lua",
+  "dependencies": ["Steamodded"],
+  "badge_colour": "455A64",
+  "badge_text_colour": "FFFFFF"
+}

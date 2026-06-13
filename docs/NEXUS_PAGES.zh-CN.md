@@ -16,7 +16,7 @@
 - Balatro Step Back / 对局回退: `BalatroStepBack-1.2.1.zip`
 - Balatro Shop Undo / 商店回退: `BalatroShopUndo-1.0.1.zip`
 - Balatro Run History / 历史战绩: `BalatroRunArchive-0.1.2.zip`
-- Balatro Score Preview / 分数预览: `BalatroScorePreview-1.2.2.zip`
+- Balatro Score Preview / 分数预览: `BalatroScorePreview-1.3.0.zip`
 - Balatro Modifier Warning / 覆盖提醒: `BalatroModifierWarning-1.1.2.zip`
 
 ## 推荐分类和标签

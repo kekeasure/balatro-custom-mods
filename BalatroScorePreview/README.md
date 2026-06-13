@@ -6,13 +6,14 @@ Author: ZhiSunian
 
 Chinese name: 分数预览
 
-Version: 1.2.2
+Version: 1.3.0
 
 Shows a sandboxed reference score before playing the selected hand.
 
 ## What It Does
 
 - Shows `Reference: XXXXX` in English, `参考值：XXXXX` in Simplified Chinese, and `參考值：XXXXX` in Traditional Chinese when cards are selected.
+- If the current round score plus the previewed score reaches the blind requirement, the reference row turns green and adds `Enough`, `达标`, or `達標`.
 - Shows `Reference: ???`, `参考值：？？？`, or `參考值：？？？` when any selected card is logically face-down, so selected hidden card information is not revealed.
 - Prefers a full sandbox simulation: temporarily runs the real scoring path, then restores the run state.
 - Covers normal poker hands, scoring cards, held-card effects, Jokers, enhancements, seals, deck final scoring steps, and other real scoring paths.
@@ -59,6 +60,11 @@ The full simulation keeps the run unchanged by snapshotting and restoring state.
 This archive contains only original Lua mod code and metadata. It does not include Balatro, Lovely, Steamodded, game files, images, audio, or other third-party assets.
 
 ## Changelog
+
+### 1.3.0
+
+- Added a target-reached highlight: when current round score plus the previewed score is enough to clear the blind, the preview row turns green and shows `Enough`, `达标`, or `達標`.
+- Updated the public version to 1.3.0.
 
 ### 1.2.2
 
